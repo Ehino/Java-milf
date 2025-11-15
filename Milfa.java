@@ -38,13 +38,13 @@ public class Milfa extends DirtyGirls{
 
 	@Override
 	public String getInfo() {
-		return "Имя: " + name + 
-		"Город: " + city +
-		"Возраст: " + age +
-		"Умение готовить: " + (cooking? "Умеет" : "Не умеет") +
-		"Категория: Милфа" + 
-		"Количество мужей: " + husband +
-		"Количество детей: " + children +
-		"Приемные ли дети: " + (detdom? "Да" : "Нет");
+		return "\nИмя: " + name + 
+		"\nГород: " + city +
+		"\nВозраст: " + age +
+		"\nУмение готовить: " + (cooking? "Умеет" : "Не умеет") +
+		"\nКатегория: Милфа" + 
+		"\nКоличество мужей: " + husband +
+		"\nКоличество детей: " + children +
+		"\nПриемные ли дети: " + (detdom? "Да" : "Нет");
 	}
 }

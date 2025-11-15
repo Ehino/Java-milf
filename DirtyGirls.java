@@ -9,6 +9,10 @@ public abstract class DirtyGirls {
 	protected int age;
 	protected boolean cooking;
 
+	public DirtyGirls(int id){
+		this.id = id;
+	}
+
 	public DirtyGirls(String name, String city, int age, boolean cooking){
 		DirtyGirls.id++;
 		this.name = name;

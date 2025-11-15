@@ -9,12 +9,12 @@ public class Altushka extends DirtyGirls{
 	
 	@Override
 	public String getInfo() {
-		return "Имя: " + name + 
-		"Город: " + city +
-		"Возраст: " + age +
-		"Умение готовить: " + (cooking? "Да" : "Нет") +
-		"Категория: Альтушка" + 
-		"Количество парней: " + countBoyfriend; 
+		return "\nИмя: " + name + 
+		"\nГород: " + city +
+		"\nВозраст: " + age +
+		"\nУмение готовить: " + (cooking? "Да" : "Нет") +
+		"\nКатегория: Альтушка" + 
+		"\nКоличество парней: " + countBoyfriend; 
 	}
 
 	
