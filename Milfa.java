@@ -6,8 +6,8 @@ public class Milfa extends DirtyGirls{
 	private int  husband;
 	private boolean detdom = false;
 
-	public Milfa(String name, String city, int age, boolean cooking,int children, int husband, boolean detdom){
-		super(name, city, age, cooking);
+	public Milfa(String name, String password, String city, int age, boolean cooking,int children, int husband, boolean detdom){
+		super(name, password, city, age, cooking);
 		this.children = children;
 		this.husband = husband;
 		this.detdom = detdom;
@@ -38,7 +38,8 @@ public class Milfa extends DirtyGirls{
 
 	@Override
 	public String getInfo() {
-		return "\nИмя: " + name + 
+		return "Имя: " + name + 
+		"\nПароль: " + password + 
 		"\nГород: " + city +
 		"\nВозраст: " + age +
 		"\nУмение готовить: " + (cooking? "Умеет" : "Не умеет") +
