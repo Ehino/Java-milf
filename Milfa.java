@@ -1,39 +1,24 @@
-import java.util.Scanner;
 
 public class Milfa extends DirtyGirls{
 
 	private int children;
 	private int  husband;
-	private boolean detdom = false;
+	private String detdom;
 
-	public Milfa(String name, String password, String city, int age, boolean cooking,int children, int husband, boolean detdom){
+	public Milfa(String name, String password, String city, int age, boolean cooking,int children, int husband){
 		super(name, password, city, age, cooking);
 		this.children = children;
 		this.husband = husband;
-		this.detdom = detdom;
+		this.detdom = "Не приемные";
 		Proverka(children, husband);
 	}
 	
 	public void Proverka(int children, int husband){
-		Scanner scanner = new Scanner(System.in);
-		
 		if(children > 1 && husband == 0){
-			while(true){
-				System.out.print("Ваши дети приемные?(1.Да 2.Нет)");
-				int a = scanner.nextInt();
-				if(a == 1){
-					detdom = true;
-					break;
-				} else if(a == 2){
-					detdom = false;
-					break;
-				}
-				else{
-					System.out.println("Неверный выбор. 1 - Да, 2 - Нет");
-				}
-			}
+			detdom = "Приемные";
+		} else{
+			detdom = "Не приемные";
 		}
-		scanner.close();
 	}
 
 	@Override
@@ -46,6 +31,6 @@ public class Milfa extends DirtyGirls{
 		"\nКатегория: Милфа" + 
 		"\nКоличество мужей: " + husband +
 		"\nКоличество детей: " + children +
-		"\nПриемные ли дети: " + (detdom? "Да" : "Нет");
+		"\nПриемные ли дети: " + (detdom);
 	}
 }

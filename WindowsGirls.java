@@ -154,7 +154,7 @@ public class WindowsGirls extends JFrame{
 			if (milfButton.isSelected()) {
 				int children = Integer.parseInt(childrenField.getText());
 				int husbands = Integer.parseInt(husbandField.getText());
-				Milfa milf = new Milfa(name, password, city, age, cooking, children, husbands, false);
+				Milfa milf = new Milfa(name, password, city, age, cooking, children, husbands);
 				SaveDitryGirls.save(milf);
 			} else {
 				int boyfriends = Integer.parseInt(boyfriendField.getText());
