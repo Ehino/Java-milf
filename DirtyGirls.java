@@ -21,7 +21,6 @@ public abstract class DirtyGirls {
 		this.age = age;
 		this.cooking = cooking;
 	}
-	// dirty
 
 	public abstract String getInfo();
 
