@@ -34,7 +34,7 @@ public class WindowsReg extends JFrame {
 		employerButton = new JRadioButton("Работодатель");
 		workerButton = new JRadioButton("Работник");
 		checkBox = new JCheckBox("Согласие на обработку персональных данных", false);
-		JButton regButton = new JButton("Зарегестрироваться");
+		JButton regButton = new JButton("Зарегистрироваться");
 
 		employerButton.setFont(font);
 		workerButton.setFont(font);
