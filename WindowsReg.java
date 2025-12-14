@@ -69,7 +69,8 @@ public class WindowsReg extends JFrame {
 			Boolean check = checkBox.isSelected();
 
 			if(employerButton.isSelected() && check){
-				//Реализовать другую страницу для регистрации работодателя и создания анкет
+				dispose();
+                new WindowsEmployer().setVisible(true);
 			} else if(workerButton.isSelected() && check){
 				dispose();
 				new WindowsGirls().setVisible(true);
