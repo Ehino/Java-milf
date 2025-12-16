@@ -5,9 +5,9 @@ import javax.swing.*;
 
 public class WindowsReg extends JFrame {
 
-	JTextField nameField;
 	JRadioButton employerButton, workerButton;
 	JCheckBox checkBox;
+	JButton regButton, backButton;
 	Font font = new Font("Arial", Font.ITALIC, 16);
 	
 	public WindowsReg(){
@@ -20,31 +20,24 @@ public class WindowsReg extends JFrame {
 		Container container = super.getContentPane();
 		container.setLayout(null);
 
-		JLabel nameLabel = new JLabel("Ваше имя или никнейм");
-		nameField = new JTextField("");
-
-		nameLabel.setFont(font);
-
-		nameLabel.setBounds(50, 50, 200, 30);
-		nameField.setBounds(250, 50, 200, 30);
-
-		container.add(nameLabel);
-		container.add(nameField);
-
 		employerButton = new JRadioButton("Работодатель");
 		workerButton = new JRadioButton("Работник");
 		checkBox = new JCheckBox("Согласие на обработку персональных данных", false);
-		JButton regButton = new JButton("Зарегистрироваться");
+		regButton = new JButton("Зарегистрироваться");
+		backButton = new JButton("Назад");
 
 		employerButton.setFont(font);
 		workerButton.setFont(font);
 		checkBox.setFont(font);
 		regButton.setFont(font);
+		backButton.setFont(font);
+		
 
 		employerButton.setBounds(150, 150, 200, 30);
 		workerButton.setBounds(450, 150, 200, 30);
 		checkBox.setBounds(100, 250, 500, 30);
-		regButton.setBounds(300,350,300,30);
+		regButton.setBounds(350,350,300,30);
+		backButton.setBounds(100,350,200,30);
 
 
 		employerButton.setSelected(true);
@@ -53,25 +46,25 @@ public class WindowsReg extends JFrame {
 		container.add(workerButton);
 		container.add(checkBox);
 		container.add(regButton);
+		container.add(backButton);
 
 		ButtonGroup roleGroup = new ButtonGroup();
 		roleGroup.add(employerButton);
 		roleGroup.add(workerButton);
 
 		regButton.addActionListener((ActionListener) new RegButtonManager());
+		backButton.addActionListener(new BackAction());
 	}
 
 	class RegButtonManager implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String nameUser = nameField.getText();
-			Boolean check = checkBox.isSelected();
 
-			if(employerButton.isSelected() && check){
+			if(employerButton.isSelected()){
 				dispose();
                 new WindowsEmployer().setVisible(true);
-			} else if(workerButton.isSelected() && check){
+			} else if(workerButton.isSelected()){
 				dispose();
 				new WindowsGirls().setVisible(true);
 			}
@@ -79,4 +72,12 @@ public class WindowsReg extends JFrame {
         }
 
 	}
+
+	class BackAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dispose();
+            new FirstWindows().setVisible(true);
+        }
+    }
 }

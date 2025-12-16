@@ -9,7 +9,7 @@ public class WindowsEmployer extends JFrame {
     JTextField nameField, passwordField, cityField, companyField, jobField, requirementsField;
     JComboBox<String> girlTypeCombo;
     JCheckBox statusCheckBox;
-    JButton regButton;
+    JButton regButton, backButton;
 
     Font font = new Font("Arial", Font.ITALIC, 16);
 
@@ -87,11 +87,19 @@ public class WindowsEmployer extends JFrame {
         container.add(statusCheckBox);
 
         regButton = new JButton("Зарегистрироваться");
+        backButton = new JButton("Назад");
+
         regButton.setFont(font);
-        regButton.setBounds(50, 450, 200, 30);
+        backButton.setFont(font);
+
+        regButton.setBounds(350, 450, 200, 30);
+        backButton.setBounds(100, 450, 200, 30);
+
         container.add(regButton);
+        container.add(backButton);
 
         regButton.addActionListener(new RegButtonEmployer());
+        backButton.addActionListener(new BackAction());
     }
 
     class RegButtonEmployer implements ActionListener {
@@ -122,10 +130,20 @@ public class WindowsEmployer extends JFrame {
 
             SaveEmployer.save(employer);
 
+            DataManager.addEmployer(employer);
+
             JOptionPane.showMessageDialog(WindowsEmployer.this,
                     "Работодатель зарегистрирован!",
                     "Успех",
                     JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    class BackAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dispose();
+            new WindowsReg().setVisible(true);
         }
     }
 }

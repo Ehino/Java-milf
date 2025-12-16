@@ -11,7 +11,7 @@ public class WindowsGirls extends JFrame{
 	JRadioButton milfButton, altushkaButton;
 	JTextField childrenField, husbandField, boyfriendField;
 	JPanel dopPanel;
-	JButton regButton;
+	JButton regButton, backButton;
 	
     Font font = new Font("Arial", Font.ITALIC, 16);
     public WindowsGirls(){
@@ -109,11 +109,19 @@ public class WindowsGirls extends JFrame{
 		manager.updatePanel();
 
 		regButton = new JButton("Зарегистрироваться");
+		backButton = new JButton("Назад");
+
 		regButton.setFont(font);
+		backButton.setFont(font);
+
 		regButton.setBounds(500, 200, 200, 30);
+		backButton.setBounds(500, 250, 200, 30);
+
 		container.add(regButton);
+		container.add(backButton);
 
 		regButton.addActionListener((ActionListener) new RegButtonGirls());
+		backButton.addActionListener((ActionListener) new BackAction());
 
     }	
 
@@ -156,13 +164,25 @@ public class WindowsGirls extends JFrame{
 				int husbands = Integer.parseInt(husbandField.getText());
 				Milfa milf = new Milfa(name, password, city, age, cooking, children, husbands);
 				SaveDitryGirls.save(milf);
+
+				DataManager.addGirl(milf);
 			} else {
 				int boyfriends = Integer.parseInt(boyfriendField.getText());
 				Altushka alt = new Altushka(name, password, city, age, cooking, boyfriends);
 				SaveDitryGirls.save(alt);
-    }
+
+				DataManager.addGirl(alt);
+    		}
 		}
 		
 	}
+
+	class BackAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+			new WindowsReg().setVisible(true);
+		}
+    }
 
 }

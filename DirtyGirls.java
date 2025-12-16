@@ -1,13 +1,21 @@
 public abstract class DirtyGirls {
 	private static int id;
-
-    public static int getId() {
-        return id;
-    }
 	protected  String password;
 	protected String name, city;
 	protected int age;
 	protected boolean cooking;
+
+	public static int getId() {
+        return id;
+    }
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getName() {
+		return name;
+	}
 
 	public DirtyGirls(int id){
 		this.id = id;

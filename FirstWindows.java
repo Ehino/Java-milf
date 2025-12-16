@@ -35,6 +35,7 @@ public class FirstWindows extends JFrame{
 		container.add(regLabel);
 
 		regLabel.addActionListener((ActionListener) new RegButtonManager());
+		loginLabel.addActionListener((ActionListener) new LoginButtonManager());
 
 	}
 
@@ -43,6 +44,14 @@ public class FirstWindows extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			dispose();
 			new WindowsReg().setVisible(true);
+		}
+	}
+
+	class LoginButtonManager implements  ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+			new WindowsLogin().setVisible(true);
 		}
 	}
 }

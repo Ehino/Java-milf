@@ -1,18 +1,23 @@
 public abstract class Employer{
     private static int id;
-
-    public static int getId() { return id; }
-
     protected String name;
     protected String password;
-
-
     protected String city;
     protected String companyName;
     protected String jobDescribe;
     protected String girlType;
     protected String requirements;
     protected boolean advertStatus;
+
+    public static int getId() { return id; }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 
     public Employer(String name, String password,String city, String companyName, String jobDescribe,String girlType, String requirements, boolean advertStatus){
         Employer.id ++;
