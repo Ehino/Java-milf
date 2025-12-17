@@ -4,6 +4,6 @@ public class Configs {
 	protected String dbPort = "3306";
 	protected String dbUser = "root";
 	protected String dbPass = "93Bomolu!)";
-	protected String dbName = "DirtyCirls";
+	protected String dbName = "DirtyGirls";
 
 }

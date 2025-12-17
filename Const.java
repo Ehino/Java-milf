@@ -5,7 +5,7 @@ public class Const {
 	public static final String ALT_CITY = "city";
 	public static final String ALT_AGE = "age";
 	public static final String ALT_COOKING = "cooking";
-	public static final String ALT_BOYFRIEND = "countBoyfriend";
+	public static final String ALT_CBOYFRIEND = "countBoyfriend";
 	public static final String ALT_PASSWORD = "password";
 	public static final String ALT_GIRLTYPE = "girltype";
 }
