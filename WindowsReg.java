@@ -5,7 +5,6 @@ import javax.swing.*;
 
 public class WindowsReg extends JFrame {
 
-	JTextField nameField;
 	JRadioButton employerButton, workerButton;
 	JCheckBox checkBox;
 	Font font = new Font("Arial", Font.ITALIC, 16);
@@ -19,17 +18,6 @@ public class WindowsReg extends JFrame {
 
 		Container container = super.getContentPane();
 		container.setLayout(null);
-
-		JLabel nameLabel = new JLabel("Ваше имя или никнейм");
-		nameField = new JTextField("");
-
-		nameLabel.setFont(font);
-
-		nameLabel.setBounds(50, 50, 200, 30);
-		nameField.setBounds(250, 50, 200, 30);
-
-		container.add(nameLabel);
-		container.add(nameField);
 
 		employerButton = new JRadioButton("Работодатель");
 		workerButton = new JRadioButton("Работник");
@@ -65,7 +53,6 @@ public class WindowsReg extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String nameUser = nameField.getText();
 			Boolean check = checkBox.isSelected();
 
 			if(employerButton.isSelected() && check){

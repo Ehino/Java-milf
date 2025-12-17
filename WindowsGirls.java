@@ -169,6 +169,21 @@ public class WindowsGirls extends JFrame{
 				int husbands = Integer.parseInt(husbandField.getText());
 				Milfa milf = new Milfa(name, password, city, age, cooking, children, husbands);
 				SaveDitryGirls.save(milf);
+				try {
+					
+					dbHandlerAlt.singUpMilf(name, password, city, age, cooking, children, husbands);
+
+				} catch (ClassNotFoundException ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null, 
+						"Драйвер базы данных не найден!", 
+						"Ошибка драйвера", JOptionPane.ERROR_MESSAGE);
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null, 
+						"Ошибка SQL:\n" + ex.getMessage(), 
+						"Ошибка базы данных", JOptionPane.ERROR_MESSAGE);
+				}
 			} else {
 				int boyfriends = Integer.parseInt(boyfriendField.getText());
 				Altushka alt = new Altushka(name, password, city, age, cooking, boyfriends);

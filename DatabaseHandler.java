@@ -42,4 +42,31 @@ public class DatabaseHandler extends Configs{
         }
 		
 	}
+
+	public void singUpMilf(String name, String password, String city, int age, boolean cooking,int children, int husband) throws ClassNotFoundException, SQLException{
+		String insert = "INSERT INTO " + Const.MILF_TABLE + "(" + Const.MILF_NAME + "," + Const.MILF_PASSWORD + "," + Const.MILF_CITY + "," 
+		+ Const.ALT_AGE + "," + Const.ALT_COOKING + "," 
+		+ Const.MILF_CHILDREN + "," + Const.MILF_HUSBAND + "," + Const.ALT_GIRLTYPE + ")" + "VALUES(?,?,?,?,?,?,?,?)";
+	
+		PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+		try {
+            
+            prSt.setString(1, name);
+            prSt.setString(2, password);
+            prSt.setString(3, city);
+            prSt.setInt(4, age);
+            prSt.setBoolean(5, cooking);
+            prSt.setInt(6, children);
+			prSt.setInt(7, husband);
+            prSt.setString(8, "Милфа");
+
+            prSt.executeUpdate();
+            System.out.println("Данные успешно добавлены в базу!");
+
+        } catch (SQLException e) {
+            System.err.println("Ошибка SQL: " + e.getMessage());
+            e.printStackTrace();
+        }
+		
+	}
 }
