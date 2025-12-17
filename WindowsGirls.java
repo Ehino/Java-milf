@@ -166,12 +166,18 @@ public class WindowsGirls extends JFrame{
 				SaveDitryGirls.save(milf);
 
 				DataManager.addGirl(milf);
+
+				dispose();
+				new FirstWindows().setVisible(true);
 			} else {
 				int boyfriends = Integer.parseInt(boyfriendField.getText());
 				Altushka alt = new Altushka(name, password, city, age, cooking, boyfriends);
 				SaveDitryGirls.save(alt);
 
 				DataManager.addGirl(alt);
+
+				dispose();
+				new FirstWindows().setVisible(true);
     		}
 		}
 		

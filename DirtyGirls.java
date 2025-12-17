@@ -1,5 +1,6 @@
 public abstract class DirtyGirls {
 	private static int id;
+	private static int lastId;
 	protected  String password;
 	protected String name, city;
 	protected int age;
@@ -17,12 +18,8 @@ public abstract class DirtyGirls {
 		return name;
 	}
 
-	public DirtyGirls(int id){
-		this.id = id;
-	}
-
 	public DirtyGirls(String name, String password,String city, int age, boolean cooking){
-		DirtyGirls.id++;
+		this.id = lastId++;
 		this.name = name;
 		this.password = password;
 		this.city = city;

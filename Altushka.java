@@ -13,7 +13,7 @@ public class Altushka extends DirtyGirls{
 		"\nПароль: " + password + 
 		"\nГород: " + city +
 		"\nВозраст: " + age +
-		"\nУмение готовить: " + (cooking? "Да" : "Нет") +
+		"\nУмение готовить: " + (cooking? "Умеет" : "Не умеет") +
 		"\nКатегория: Альтушка" + 
 		"\nКоличество парней: " + countBoyfriend; 
 	}

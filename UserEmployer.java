@@ -7,13 +7,13 @@ public class UserEmployer extends Employer {
 
     @Override
     public String getInfo() {
-        return "Имя:" + name +
-        "\nПароль:" + password +
-        "\nГород:" + city +
-        "\nНазвание компании:" + companyName +
-        "\nОписание вакансии:" + jobDescribe +
-        "\nТребуемый тип девушки:" + girlType +
-        "\nТребования к девушке:" + requirements +
-        "\nСтатус объявления:" + (advertStatus? "Актуально" : "Не актуально");
+        return "Имя: " + name +
+        "\nПароль: " + password +
+        "\nГород: " + city +
+        "\nНазвание компании: " + companyName +
+        "\nОписание вакансии: " + jobDescribe +
+        "\nТребуемый тип девушки: " + girlType +
+        "\nТребования к девушке: " + requirements +
+        "\nСтатус объявления: " + (advertStatus? "Актуально" : "Не актуально");
     }
 }

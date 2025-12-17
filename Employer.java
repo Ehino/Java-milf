@@ -1,5 +1,6 @@
 public abstract class Employer{
     private static int id;
+    private static int lastId;
     protected String name;
     protected String password;
     protected String city;
@@ -20,7 +21,7 @@ public abstract class Employer{
     }
 
     public Employer(String name, String password,String city, String companyName, String jobDescribe,String girlType, String requirements, boolean advertStatus){
-        Employer.id ++;
+        this.id = lastId++;
         this.name = name;
         this.password = password;
         this.city = city;
