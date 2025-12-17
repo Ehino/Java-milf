@@ -19,4 +19,15 @@ public class Const {
 	public static final String MILF_CHILDREN = "children";
 	public static final String MILF_HUSBAND = "husband";
 	public static final String MILF_GIRLTYPE = "girltype";
+
+	public static final String EUSER_TABLE = "UserEmployer";
+	public static final String EUSER_ID = "idEUser";
+	public static final String EUSER_NAME = "name";
+	public static final String EUSER_PASSWORD = "password";
+	public static final String EUSER_CITY = "city";
+	public static final String EUSER_CNAME = "companyName";
+	public static final String EUSER_JDESCRIBE = "jobDescribe";
+	public static final String EUSER_GIRLTYPE = "girltype";
+	public static final String EUSER_REQUIREMENTS = "requirements";
+	public static final String EUSER_ASTATUS = "advertStatus";
 }

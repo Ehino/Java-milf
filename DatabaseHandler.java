@@ -5,16 +5,27 @@ import java.sql.SQLException;
 
 
 public class DatabaseHandler extends Configs{
-	Connection dbConnection;
+	Connection dbConnectionDirty;
+    Connection dbConnectionEmployer;
 
-	public Connection getDbConnection() throws ClassNotFoundException, SQLException {
-		String connectionString = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName;
+	public Connection getDbConnectionDirty() throws ClassNotFoundException, SQLException {
+		String connectionString = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbNameDirty;
 
-		Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
 
-		dbConnection = DriverManager.getConnection(connectionString, dbUser, dbPass);
+		dbConnectionDirty = DriverManager.getConnection(connectionString, dbUser, dbPass);
 
-		return dbConnection;
+		return dbConnectionDirty;
+	}
+
+    public Connection getDbConnectionEmployer() throws ClassNotFoundException, SQLException {
+		String connectionString = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbNameEmployer;
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		dbConnectionEmployer = DriverManager.getConnection(connectionString, dbUser, dbPass);
+
+		return dbConnectionEmployer;
 	}
 
 	public void singUpAlt(String name, String password, String city, int age, boolean cooking, int countBoyfriend) throws ClassNotFoundException, SQLException{
@@ -22,7 +33,7 @@ public class DatabaseHandler extends Configs{
 		+ Const.ALT_AGE + "," + Const.ALT_COOKING + "," 
 		+ Const.ALT_CBOYFRIEND + "," + Const.ALT_GIRLTYPE + ")" + "VALUES(?,?,?,?,?,?,?)";
 	
-		PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+		PreparedStatement prSt = getDbConnectionDirty().prepareStatement(insert);
 		try {
             
             prSt.setString(1, name);
@@ -45,10 +56,10 @@ public class DatabaseHandler extends Configs{
 
 	public void singUpMilf(String name, String password, String city, int age, boolean cooking,int children, int husband) throws ClassNotFoundException, SQLException{
 		String insert = "INSERT INTO " + Const.MILF_TABLE + "(" + Const.MILF_NAME + "," + Const.MILF_PASSWORD + "," + Const.MILF_CITY + "," 
-		+ Const.ALT_AGE + "," + Const.ALT_COOKING + "," 
-		+ Const.MILF_CHILDREN + "," + Const.MILF_HUSBAND + "," + Const.ALT_GIRLTYPE + ")" + "VALUES(?,?,?,?,?,?,?,?)";
+		+ Const.MILF_AGE + "," + Const.MILF_COOKING + "," 
+		+ Const.MILF_CHILDREN + "," + Const.MILF_HUSBAND + "," + Const.MILF_GIRLTYPE + ")" + "VALUES(?,?,?,?,?,?,?,?)";
 	
-		PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+		PreparedStatement prSt = getDbConnectionDirty().prepareStatement(insert);
 		try {
             
             prSt.setString(1, name);
@@ -59,6 +70,33 @@ public class DatabaseHandler extends Configs{
             prSt.setInt(6, children);
 			prSt.setInt(7, husband);
             prSt.setString(8, "Милфа");
+
+            prSt.executeUpdate();
+            System.out.println("Данные успешно добавлены в базу!");
+
+        } catch (SQLException e) {
+            System.err.println("Ошибка SQL: " + e.getMessage());
+            e.printStackTrace();
+        }
+		
+	}
+
+    public void singUpEUser(String name, String password, String city, String companyName, String jobDescribe, String girlType, String requirements, boolean advertStatus) throws ClassNotFoundException, SQLException{
+		String insert = "INSERT INTO " + Const.EUSER_TABLE + "(" + Const.EUSER_NAME + "," + Const.EUSER_PASSWORD + "," + Const.EUSER_CITY + "," 
+		+ Const.EUSER_CNAME + "," + Const.EUSER_JDESCRIBE + "," 
+		+ Const.EUSER_GIRLTYPE + "," + Const.EUSER_REQUIREMENTS + "," + Const.EUSER_ASTATUS + ")" + "VALUES(?,?,?,?,?,?,?,?)";
+	
+		PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(insert);
+		try {
+            
+            prSt.setString(1, name);
+            prSt.setString(2, password);
+            prSt.setString(3, city);
+            prSt.setString(4, companyName);
+            prSt.setString(5, jobDescribe);
+            prSt.setString(6, girlType);
+			prSt.setString(7, requirements);
+            prSt.setBoolean(8, advertStatus);
 
             prSt.executeUpdate();
             System.out.println("Данные успешно добавлены в базу!");
