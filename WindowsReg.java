@@ -60,6 +60,7 @@ public class WindowsReg extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+			Boolean check = checkBox.isSelected();
 
 			if(employerButton.isSelected()){
 				dispose();

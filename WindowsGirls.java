@@ -1,7 +1,16 @@
-import java.awt.*;
+import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
 
 public class WindowsGirls extends JFrame{
 
@@ -12,6 +21,7 @@ public class WindowsGirls extends JFrame{
 	JTextField childrenField, husbandField, boyfriendField;
 	JPanel dopPanel;
 	JButton regButton, backButton;
+	DatabaseHandler dbHandlerAlt = new DatabaseHandler();
 	
     Font font = new Font("Arial", Font.ITALIC, 16);
     public WindowsGirls(){
@@ -153,6 +163,7 @@ public class WindowsGirls extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			String name = nameField.getText();
 			String city = cityField.getText();
 			int age = Integer.parseInt(ageField.getText());
@@ -164,6 +175,21 @@ public class WindowsGirls extends JFrame{
 				int husbands = Integer.parseInt(husbandField.getText());
 				Milfa milf = new Milfa(name, password, city, age, cooking, children, husbands);
 				SaveDitryGirls.save(milf);
+				try {
+					
+					dbHandlerAlt.singUpMilf(name, password, city, age, cooking, children, husbands);
+
+				} catch (ClassNotFoundException ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null, 
+						"Драйвер базы данных не найден!", 
+						"Ошибка драйвера", JOptionPane.ERROR_MESSAGE);
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null, 
+						"Ошибка SQL:\n" + ex.getMessage(), 
+						"Ошибка базы данных", JOptionPane.ERROR_MESSAGE);
+				}
 
 				DataManager.addGirl(milf);
 
@@ -173,12 +199,27 @@ public class WindowsGirls extends JFrame{
 				int boyfriends = Integer.parseInt(boyfriendField.getText());
 				Altushka alt = new Altushka(name, password, city, age, cooking, boyfriends);
 				SaveDitryGirls.save(alt);
+				try {
+					
+					dbHandlerAlt.singUpAlt(name, password, city, age, cooking, boyfriends);
+
+				} catch (ClassNotFoundException ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null, 
+						"Драйвер базы данных не найден!", 
+						"Ошибка драйвера", JOptionPane.ERROR_MESSAGE);
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null, 
+						"Ошибка SQL:\n" + ex.getMessage(), 
+						"Ошибка базы данных", JOptionPane.ERROR_MESSAGE);
+				}
 
 				DataManager.addGirl(alt);
 
 				dispose();
 				new FirstWindows().setVisible(true);
-    		}
+					}
 		}
 		
 	}

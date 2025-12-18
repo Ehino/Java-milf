@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import javax.swing.*;
 
 public class WindowsEmployer extends JFrame {
@@ -10,6 +11,7 @@ public class WindowsEmployer extends JFrame {
     JComboBox<String> girlTypeCombo;
     JCheckBox statusCheckBox;
     JButton regButton, backButton;
+    DatabaseHandler dbHandlerAlt = new DatabaseHandler();
 
     Font font = new Font("Arial", Font.ITALIC, 16);
 
@@ -132,10 +134,23 @@ public class WindowsEmployer extends JFrame {
 
             DataManager.addEmployer(employer);
 
-            JOptionPane.showMessageDialog(WindowsEmployer.this,
-                    "Работодатель зарегистрирован!",
-                    "Успех",
-                    JOptionPane.INFORMATION_MESSAGE);
+            try {
+
+                dbHandlerAlt.singUpEUser(name, password, city, companyName, jobDescribe, girlType, requirements, advertStatus);
+
+			} catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, 
+                    "Драйвер базы данных не найден!", 
+                    "Ошибка драйвера", JOptionPane.ERROR_MESSAGE);
+			} catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, 
+                    "Ошибка SQL:\n" + ex.getMessage(), 
+                    "Ошибка базы данных", JOptionPane.ERROR_MESSAGE);
+			}
+
+
         }
     }
 
