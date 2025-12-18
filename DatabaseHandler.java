@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -107,4 +108,57 @@ public class DatabaseHandler extends Configs{
         }
 		
 	}
+
+    public String ResultUser(String login, String password) {
+    ResultSet resSet = null;
+
+        String selectAlt = "SELECT * FROM " + Const.ALT_TABLE + " WHERE " +
+                Const.ALT_NAME + "=? AND " + Const.ALT_PASSWORD + "=?";
+        try {
+            PreparedStatement prSt = getDbConnectionDirty().prepareStatement(selectAlt);
+            prSt.setString(1, login);
+            prSt.setString(2, password);
+            resSet = prSt.executeQuery();
+
+            if (resSet.next()) {
+                return "Altushka";
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String selectMilf = "SELECT * FROM " + Const.MILF_TABLE + " WHERE " +
+                Const.MILF_NAME + "=? AND " + Const.MILF_PASSWORD + "=?";
+        try {
+            PreparedStatement prSt = getDbConnectionDirty().prepareStatement(selectMilf);
+            prSt.setString(1, login);
+            prSt.setString(2, password);
+            resSet = prSt.executeQuery();
+
+            if (resSet.next()) {
+                return "Milfa";
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String selectEmp = "SELECT * FROM " + Const.EUSER_TABLE + " WHERE " +
+                Const.EUSER_NAME + "=? AND " + Const.EUSER_PASSWORD + "=?";
+        try {
+            PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(selectEmp);
+            prSt.setString(1, login);
+            prSt.setString(2, password);
+            resSet = prSt.executeQuery();
+
+            if (resSet.next()) {
+                return "Employer";
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    
+        return "NotFound";
+    }
+    
 }

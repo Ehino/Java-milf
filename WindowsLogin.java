@@ -67,8 +67,25 @@ public class WindowsLogin extends JFrame {
                 JOptionPane.showMessageDialog(WindowsLogin.this, "Введите логин и пароль!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            DatabaseHandler dbHandler = new DatabaseHandler();
+
+            String userRole = dbHandler.ResultUser(login, password);
+
+            if (userRole.equals("NotFound")) {
+                JOptionPane.showMessageDialog(WindowsLogin.this, 
+                    "Неверный логин или пароль, либо такого пользователя не существует.", 
+                    "Ошибка входа", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(WindowsLogin.this, 
+                    "Успешный вход! Ваша роль: " + userRole);
+                
+                // ЗДЕСЬ БУДЕТ ЛОГИКА ОТКРЫТИЯ ГЛАВНОГО ОКНА ПРИЛОЖЕНИЯ
+                // Например:
+                    
+            }
         }
     }
+    
 
     class BackAction implements ActionListener {
         @Override
