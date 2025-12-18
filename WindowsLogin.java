@@ -67,28 +67,6 @@ public class WindowsLogin extends JFrame {
                 JOptionPane.showMessageDialog(WindowsLogin.this, "Введите логин и пароль!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
-            Object user = DataManager.login(login, password);
-
-            if (user != null) {
-
-                dispose(); 
-                
-                if (user instanceof DirtyGirls) {
-                    DirtyGirls girl = (DirtyGirls) user;
-                    JOptionPane.showMessageDialog(null, "Привет, крошка " + girl.getName() + "!\nДобро пожаловать домой.");
-                    // Здесь в будущем откроем MainMenu для девушек
-                    // new MainMenuGirls(girl).setVisible(true);
-                } else if (user instanceof Employer) {
-                    Employer boss = (Employer) user;
-                    JOptionPane.showMessageDialog(null, "Здравствуйте, " + boss.getName() + ".\nВаш кабинет готов.");
-                    // Здесь в будущем откроем MainMenu для работодателя
-                    // new MainMenuEmployer(boss).setVisible(true);
-                }
-
-            } else {
-                JOptionPane.showMessageDialog(WindowsLogin.this, "Неверный логин или пароль", "Ошибка", JOptionPane.ERROR_MESSAGE);
-            }
         }
     }
 

@@ -132,8 +132,6 @@ public class WindowsEmployer extends JFrame {
 
             SaveEmployer.save(employer);
 
-            DataManager.addEmployer(employer);
-
             try {
 
                 dbHandlerAlt.singUpEUser(name, password, city, companyName, jobDescribe, girlType, requirements, advertStatus);
@@ -150,7 +148,8 @@ public class WindowsEmployer extends JFrame {
                     "Ошибка базы данных", JOptionPane.ERROR_MESSAGE);
 			}
 
-
+            dispose();
+			new FirstWindows().setVisible(true);
         }
     }
 

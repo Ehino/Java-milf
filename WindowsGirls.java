@@ -2,11 +2,13 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -21,7 +23,7 @@ public class WindowsGirls extends JFrame{
 	JTextField childrenField, husbandField, boyfriendField;
 	JPanel dopPanel;
 	JButton regButton, backButton;
-	DatabaseHandler dbHandlerAlt = new DatabaseHandler();
+	DatabaseHandler dbHandler = new DatabaseHandler();
 	
     Font font = new Font("Arial", Font.ITALIC, 16);
     public WindowsGirls(){
@@ -165,19 +167,39 @@ public class WindowsGirls extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			
 			String name = nameField.getText();
-			String city = cityField.getText();
-			int age = Integer.parseInt(ageField.getText());
-			boolean cooking = cookingbox.isSelected();
 			String password = passwordField.getText();
+			String city = cityField.getText();
+			String ageText = ageField.getText();
+			boolean cooking = cookingbox.isSelected();
+
+			if(name.isEmpty() || password.isEmpty() || city.isEmpty() || ageText.isEmpty()){
+				JOptionPane.showMessageDialog(WindowsGirls.this, "Заполните все поля!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                return;
+			}else if (!isNum(ageText)) {
+				JOptionPane.showMessageDialog(null, "В поле \"Возраст\" должно быть число!", "Ошибка ввода", JOptionPane.ERROR_MESSAGE);
+				return;
+			}	
+
+			int age = Integer.parseInt(ageField.getText());
 
 			if (milfButton.isSelected()) {
+				String childrenText = childrenField.getText();
+				String husbandsText = childrenField.getText();
+
+				if(childrenText.isEmpty() || childrenText.isEmpty()){
+					JOptionPane.showMessageDialog(WindowsGirls.this, "Поля \"Количество детей\" и \"Количество мужей\" должны быть заполнены", "Ошибка ввода", JOptionPane.ERROR_MESSAGE);
+				}else if(!isNum(childrenText) || !isNum(husbandsText)){
+					JOptionPane.showMessageDialog(null, "В полях \"Количество детей\" и \"Количество мужей\" должно быть число!", "Ошибка ввода", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
 				int children = Integer.parseInt(childrenField.getText());
 				int husbands = Integer.parseInt(husbandField.getText());
 				Milfa milf = new Milfa(name, password, city, age, cooking, children, husbands);
 				SaveDitryGirls.save(milf);
 				try {
 					
-					dbHandlerAlt.singUpMilf(name, password, city, age, cooking, children, husbands);
+					dbHandler.singUpMilf(name, password, city, age, cooking, children, husbands);
 
 				} catch (ClassNotFoundException ex) {
 					ex.printStackTrace();
@@ -191,17 +213,24 @@ public class WindowsGirls extends JFrame{
 						"Ошибка базы данных", JOptionPane.ERROR_MESSAGE);
 				}
 
-				DataManager.addGirl(milf);
-
 				dispose();
 				new FirstWindows().setVisible(true);
 			} else {
+				String boyfriendsText = boyfriendField.getText();
+
+				if(boyfriendsText.isEmpty()){
+					JOptionPane.showMessageDialog(WindowsGirls.this, "Поле \"Количество парней\" должно быть заполнено", "Ошибка ввода", JOptionPane.ERROR_MESSAGE);
+				}else if(!isNum(boyfriendsText)){
+					JOptionPane.showMessageDialog(null, "В поле \"Количество парней\" должно быть число!", "Ошибка ввода", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
 				int boyfriends = Integer.parseInt(boyfriendField.getText());
 				Altushka alt = new Altushka(name, password, city, age, cooking, boyfriends);
 				SaveDitryGirls.save(alt);
 				try {
 					
-					dbHandlerAlt.singUpAlt(name, password, city, age, cooking, boyfriends);
+					dbHandler.singUpAlt(name, password, city, age, cooking, boyfriends);
 
 				} catch (ClassNotFoundException ex) {
 					ex.printStackTrace();
@@ -215,13 +244,10 @@ public class WindowsGirls extends JFrame{
 						"Ошибка базы данных", JOptionPane.ERROR_MESSAGE);
 				}
 
-				DataManager.addGirl(alt);
-
 				dispose();
 				new FirstWindows().setVisible(true);
-					}
-		}
-		
+			}	
+		}	
 	}
 
 	class BackAction implements ActionListener {
@@ -232,4 +258,15 @@ public class WindowsGirls extends JFrame{
 		}
     }
 
+	private boolean isNum (String str) {
+    if (str == null || str.isEmpty()) return false;
+    try {
+        Integer.parseInt(str);
+        return true;
+    } catch (NumberFormatException e) {
+        return false;
+    }
 }
+}
+
+
