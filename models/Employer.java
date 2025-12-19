@@ -12,16 +12,6 @@ public abstract class Employer{
     protected String requirements;
     protected boolean advertStatus;
 
-    public static int getId() { return id; }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     public Employer(String name, String password,String city, String companyName, String jobDescribe,String girlType, String requirements, boolean advertStatus){
         this.id = lastId++;
         this.name = name;
@@ -34,5 +24,39 @@ public abstract class Employer{
         this.advertStatus = advertStatus;
     }
 
+    public static int getId() { return id; }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     public abstract String getInfo();
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public String getJobDescribe() {
+        return jobDescribe;
+    }
+
+    public String getGirlType() {
+        return girlType;
+    }
+
+    public String getRequirements() {
+        return requirements;
+    }
+
+    public Boolean isAdvertStatus() {
+        return advertStatus;
+    }
 }

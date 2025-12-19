@@ -8,6 +8,10 @@ public class Altushka extends DirtyGirls{
 		super(name, password, city, age, cooking);
 		this.countBoyfriend = countBoyfriend;
 	}
+
+	public int getCBoyFriend() {
+		return countBoyfriend;
+	}
 	
 	@Override
 	public String getInfo() {

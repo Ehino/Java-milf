@@ -1,11 +1,11 @@
 package windows;
 
 import database.DatabaseHandler;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import models.UserEmployer;
 
 public class WindowsLogin extends JFrame {
 
@@ -72,7 +72,6 @@ public class WindowsLogin extends JFrame {
                 return;
             }
             DatabaseHandler dbHandler = new DatabaseHandler();
-
             String userRole = dbHandler.ResultUser(login, password);
 
             if (userRole.equals("NotFound")) {
@@ -80,11 +79,18 @@ public class WindowsLogin extends JFrame {
                     "Неверный логин или пароль, либо такого пользователя не существует.", 
                     "Ошибка входа", JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(WindowsLogin.this, 
-                    "Успешный вход! Ваша роль: " + userRole);
-                
-                // ЗДЕСЬ БУДЕТ ЛОГИКА ОТКРЫТИЯ ГЛАВНОГО ОКНА ПРИЛОЖЕНИЯ
-                // Например:
+                if(userRole == "Altushka"){
+                    dispose();   
+                } 
+                if(userRole == "Milfa"){
+                    dispose();
+                } 
+                if(userRole.equals("Employer")){
+                    UserEmployer employer = dbHandler.getInfoEmp(login);
+
+                    dispose();
+                    new MainEmp(employer).setVisible(true);
+                } 
                     
             }
         }

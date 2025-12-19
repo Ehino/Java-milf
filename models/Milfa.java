@@ -13,6 +13,14 @@ public class Milfa extends DirtyGirls{
 		this.detdom = "Не приемные";
 		Proverka(children, husband);
 	}
+
+	public int getChildren() {
+        return children;
+    }
+
+    public int getHusband() {
+        return husband;
+    }
 	
 	public void Proverka(int children, int husband){
 		if(children > 1 && husband == 0){

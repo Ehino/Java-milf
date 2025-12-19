@@ -8,18 +8,6 @@ public abstract class DirtyGirls {
 	protected int age;
 	protected boolean cooking;
 
-	public static int getId() {
-        return id;
-    }
-
-	public String getPassword() {
-		return password;
-	}
-
-	public String getName() {
-		return name;
-	}
-
 	public DirtyGirls(String name, String password,String city, int age, boolean cooking){
 		this.id = lastId++;
 		this.name = name;
@@ -30,6 +18,30 @@ public abstract class DirtyGirls {
 	}
 
 	public abstract String getInfo();
+
+	public static int getId() {
+        return id;
+    }
+
+	public String getName() {
+		return name;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+    public String getCity() {
+        return city;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public boolean isCooking() {
+        return cooking;
+    }
 
 }
 
