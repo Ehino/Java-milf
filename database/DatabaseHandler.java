@@ -338,4 +338,30 @@ public class DatabaseHandler extends Configs{
         }
         return vacancies;
     }
+
+    public List<String[]> getFilterVacancies(String vacancyGirltype, boolean vacancyAStatus) {
+        List<String[]> vacancies = new ArrayList<>();
+        String select = "SELECT * FROM " + Const.VACANCY_TABLE + " WHERE " + Const.VACANCY_GIRLTYPE + "=? AND " + Const.VACANCY_ASTATUS + "=?";
+
+        try {
+            PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(select);
+            prSt.setString(1, vacancyGirltype);
+            prSt.setBoolean(2, vacancyAStatus);
+            ResultSet resSet = prSt.executeQuery();
+
+            while (resSet.next()) {
+                boolean isActive = resSet.getBoolean(Const.VACANCY_ASTATUS);
+
+                vacancies.add(new String[]{
+                    resSet.getString(Const.VACANCY_GIRLTYPE),
+                    resSet.getString(Const.VACANCY_JDESCRIBE),
+                    resSet.getString(Const.VACANCY_REQUIREMENTS),
+                    isActive ? "Активна" : "Закрыта"
+                });
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return vacancies;
+    }
 } 

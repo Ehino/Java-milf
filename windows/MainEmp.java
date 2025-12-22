@@ -59,36 +59,6 @@ public class MainEmp extends JFrame {
         container.add(addVacancyButton);
 
         aLabel = new JLabel("Ваши вакансии"); 
-        /* jDescribeLabel = new JLabel("Описание вакансии: " + employer.getJobDescribe());
-        girlTyprLabel = new JLabel("Требуемый тип девушки: " + employer.getGirlType());
-        requirementsLabel = new JLabel("Требование к девушке " + employer.getRequirements());
-        advertStatusLabel = new JLabel("Статус объявления: " + (employer.isAdvertStatus() ? "Актуально" : "Закрыто"));
-
-        aLabel.setFont(font20);
-        jDescribeLabel.setFont(font);
-        girlTyprLabel.setFont(font);
-        requirementsLabel.setFont(font);
-        advertStatusLabel.setFont(font);
-
-        dopPanel = new JPanel();
-        dopPanel.setLayout(null);
-        dopPanel.setBackground(new Color(220, 220, 220));
-        //dopPanel.setBounds(20, 250, 500, 300);
-
-        aLabel.setBounds(180, 210, 200, 30); 
-
-        jDescribeLabel.setBounds(10, 10, 480, 30);
-        girlTyprLabel.setBounds(10, 40, 480, 30);
-        requirementsLabel.setBounds(10, 70, 480, 30);
-        advertStatusLabel.setBounds(10, 100, 480, 30);
-
-        dopPanel.add(jDescribeLabel);
-        dopPanel.add(girlTyprLabel);
-        dopPanel.add(requirementsLabel);
-        dopPanel.add(advertStatusLabel);
-
-        container.add(aLabel);
-        container.add(dopPanel); */
         
         refreshVacancies(container, employer.getName());
     }
@@ -135,32 +105,40 @@ public class MainEmp extends JFrame {
                 JPanel card = new JPanel();
                 card.setBorder(BorderFactory.createEtchedBorder());
                 card.setLayout(new GridLayout(4, 1));
+                Dimension cardDim = new Dimension(480, 120);
+                card.setPreferredSize(cardDim);
+                card.setMaximumSize(cardDim);
+                card.setMinimumSize(cardDim);
                 card.setMaximumSize(new Dimension(500, 120));
                 card.setBackground(Color.WHITE);
-
-                JLabel typeL = new JLabel(" Кого ищем: " + vac[0]);  
-                JLabel descL = new JLabel(" Описание: " + vac[1]);   
-                JLabel reqL = new JLabel(" Требования: " + vac[2]);  
+                card.setAlignmentX(Component.CENTER_ALIGNMENT);
+                
+                JLabel girlTypeLabel = new JLabel(" Кого ищем: " + vac[0]);  
+                JLabel jobDescribeLabel = new JLabel(" Описание: " + vac[1]);   
+                JLabel requirementsLabel = new JLabel(" Требования: " + vac[2]);  
 
                 String status = vac[3];
-                JLabel statusL = new JLabel(" Статус: " + status);
+                JLabel advertStatusLabel = new JLabel(" Статус: " + status);
                 if (status.equalsIgnoreCase("Активна")) {
-                    statusL.setForeground(new Color(0, 150, 0)); 
+                    advertStatusLabel.setForeground(new Color(0, 150, 0)); 
                 } else {
-                    statusL.setForeground(Color.RED); 
+                    advertStatusLabel.setForeground(Color.RED); 
                 }
                 
-                statusL.setFont(new Font("Arial", Font.BOLD, 14));
-                card.add(typeL);
-                card.add(descL);
-                card.add(reqL);
-                card.add(statusL);
+                advertStatusLabel.setFont(new Font("Arial", Font.BOLD, 14));
+                card.add(girlTypeLabel);
+                card.add(jobDescribeLabel);
+                card.add(requirementsLabel);
+                card.add(advertStatusLabel);
                 listPanel.add(card);
                 listPanel.add(Box.createRigidArea(new Dimension(0, 10)));
             }
         }
         JScrollPane scrollPane = new JScrollPane(listPanel);
-        scrollPane.setBounds(20, 250, 500, 450);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBounds(20, 310, 500, 340);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         container.add(scrollPane);
         container.revalidate();
         container.repaint();

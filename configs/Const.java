@@ -36,7 +36,7 @@ public class Const {
 	public static final String VACANCY_TABLE = "Vacancy";
 	public static final String VACANCY_ID = "idVacancy";
 	public static final String VACANCY_LOGIN = "loginEmp";
-	public static final String VACANCY_JDESCRIBE = "jobDescribe";;
+	public static final String VACANCY_JDESCRIBE = "jobDescribe";
 	public static final String VACANCY_GIRLTYPE = "girlType";
 	public static final String VACANCY_REQUIREMENTS = "requirements";
 	public static final String VACANCY_ASTATUS = "advertStatus";
