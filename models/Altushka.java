@@ -7,6 +7,7 @@ public class Altushka extends DirtyGirls{
 	public Altushka(String name, String password, String city, int age, boolean cooking, int countBoyfriend){
 		super(name, password, city, age, cooking);
 		this.countBoyfriend = countBoyfriend;
+		this.girlType = "Альтушка";
 	}
 
 	public int getCBoyFriend() {

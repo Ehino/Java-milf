@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import models.Altushka;
+import models.Milfa;
 import models.UserEmployer;
 
 
@@ -221,76 +223,52 @@ public class DatabaseHandler extends Configs{
         return false;
     }
 
-    public ResultSet getInfoAlt(String name, String password, String city, int age, boolean cooking, int countBoyfriend) throws ClassNotFoundException, SQLException{
-        ResultSet resName = null;
-
-        String selectAlt = "SELECT * FROM " + Const.ALT_TABLE + " WHERE " +
-                Const.ALT_NAME + "=? AND " + Const.ALT_PASSWORD + "=? AND " + Const.ALT_CITY + "=? AND " + Const.ALT_AGE + "=? AND " + Const.ALT_COOKING + "=? AND " + Const.ALT_CBOYFRIEND + "=?";
+    public Altushka getInfoAlt(String login) {
+    String select = "SELECT * FROM " + Const.ALT_TABLE + " WHERE " + Const.ALT_NAME + "=?";
         try {
-            PreparedStatement prSt = getDbConnectionDirty().prepareStatement(selectAlt);
-            prSt.setString(1, name);
-            prSt.setString(2, password);
-            prSt.setString(3, city);
-            prSt.setInt(4, age);
-            prSt.setBoolean(5, cooking);
-            prSt.setInt(6, countBoyfriend);
+            PreparedStatement prSt = getDbConnectionDirty().prepareStatement(select);
+            prSt.setString(1, login);
+            ResultSet resSet = prSt.executeQuery();
 
-
-            resName = prSt.executeQuery(name);
-
-            
+            if (resSet.next()) {
+                return new Altushka(
+                    resSet.getString(Const.ALT_NAME),
+                    resSet.getString(Const.ALT_PASSWORD),
+                    resSet.getString(Const.ALT_CITY),
+                    resSet.getInt(Const.ALT_AGE),
+                    resSet.getBoolean(Const.ALT_COOKING),
+                    resSet.getInt(Const.ALT_CBOYFRIEND)
+                );
+            }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return resName;
-
+            return null;
     }
 
-    public void getInfoMilf(String name, String password, String city, int age, boolean cooking,int children, int husband) throws ClassNotFoundException, SQLException{
-        ResultSet resSet = null;
-
-        String selectMilf = "SELECT * FROM " + Const.MILF_TABLE + " WHERE " +
-                Const.MILF_NAME + "=? AND " + Const.MILF_PASSWORD + "=? AND " + Const.MILF_CITY + "=? AND " + Const.MILF_AGE + "=? AND " + Const.MILF_COOKING + "=? AND " + Const.MILF_CHILDREN + "=? AND " + Const.MILF_HUSBAND + "=?";
+    public Milfa getInfoMilf(String login) {
+    String select = "SELECT * FROM " + Const.MILF_TABLE + " WHERE " + Const.MILF_NAME + "=?";
         try {
-            PreparedStatement prSt = getDbConnectionDirty().prepareStatement(selectMilf);
-            prSt.setString(1, name);
-            prSt.setString(2, password);
-            prSt.setString(3, city);
-            prSt.setInt(4, age);
-            prSt.setBoolean(5, cooking);
-            prSt.setInt(6, children);
-            prSt.setInt(7, husband);
-            resSet = prSt.executeQuery();
+            PreparedStatement prSt = getDbConnectionDirty().prepareStatement(select);
+            prSt.setString(1, login);
+            ResultSet resSet = prSt.executeQuery();
 
-            return;
+            if (resSet.next()) {
+                return new Milfa(
+                    resSet.getString(Const.MILF_NAME),
+                    resSet.getString(Const.MILF_PASSWORD),
+                    resSet.getString(Const.MILF_CITY),
+                    resSet.getInt(Const.MILF_AGE),
+                    resSet.getBoolean(Const.MILF_COOKING),
+                    resSet.getInt(Const.MILF_CHILDREN),
+                    resSet.getInt(Const.MILF_HUSBAND)
+                );
+            }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+            return null;
     }
-
-   /*  public void getInfoEUser(String name, String password, String city, String companyName, String jobDescribe, String girlType, String requirements, boolean advertStatus) throws ClassNotFoundException, SQLException{
-        ResultSet resSet = null;
-
-       String selectEUser = "SELECT * FROM " + Const.EUSER_TABLE + " WHERE " +
-                Const.EUSER_NAME + "=? AND " + Const.EUSER_PASSWORD + "=? AND " + Const.EUSER_CITY + "=? AND " + Const.EUSER_CNAME + "=? AND " + Const.EUSER_JDESCRIBE + "=? AND " + Const.EUSER_GIRLTYPE + "=? AND " + Const.EUSER_REQUIREMENTS + "=? AND " + Const.EUSER_ASTATUS + "=?";
-        try {
-            PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(selectEUser);
-            prSt.setString(1, name);
-            prSt.setString(2, password);
-            prSt.setString(3, city);
-            prSt.setString(4, companyName);
-            prSt.setString(5, jobDescribe);
-            prSt.setString(6, girlType);
-            prSt.setString(7, requirements);
-            prSt.setBoolean(8, advertStatus);
-            
-            resSet = prSt.executeQuery();
-
-            return;
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     public UserEmployer getInfoEmp(String login) {
     String select = "SELECT * FROM " + Const.EUSER_TABLE + " WHERE " + Const.EUSER_NAME + "=?";

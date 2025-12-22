@@ -1,6 +1,7 @@
 import database.DatabaseHandler;
-import models.UserEmployer;
-import windows.MainEmp;
+import models.Milfa;
+import windows.MainMilf;
+
 
 public class Main {
 	public static void main(String[] args){
@@ -9,11 +10,18 @@ public class Main {
 		
 
 
-		DatabaseHandler dbHandler = new DatabaseHandler();
-        String userRole = dbHandler.ResultUser("Elnur", "12345");
+		/* DatabaseHandler dbHandler = new DatabaseHandler();
+        String userRole = dbHandler.ResultUser("AltD", "Alt1234");
 
-		UserEmployer employer = dbHandler.getInfoEmp("Elnur");            
-        new MainEmp(employer).setVisible(true);
+		Altushka altushka = dbHandler.getInfoAlt("AltD");            
+        new MainAlt(altushka).setVisible(true);
+ */
+
+		DatabaseHandler dbHandler = new DatabaseHandler();
+        String userRole = dbHandler.ResultUser("Milf", "1234");
+
+		Milfa milfa = dbHandler.getInfoMilf("Milf");            
+        new MainMilf(milfa).setVisible(true); 
 	}
 }
 

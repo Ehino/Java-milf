@@ -1,10 +1,6 @@
 package windows;
 
 import database.DatabaseHandler;
-import models.Altushka;
-import models.Milfa;
-import utils.SaveUsers;
-
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -20,6 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import models.Altushka;
+import models.Milfa;
+import utils.SaveUsers;
 
 public class WindowsGirls extends JFrame{
 
@@ -240,6 +239,7 @@ public class WindowsGirls extends JFrame{
 					}
 
 					int boyfriends = Integer.parseInt(boyfriendField.getText());
+
 					Altushka alt = new Altushka(name, password, city, age, cooking, boyfriends);
 					SaveUsers.saveDitryGirls(alt);
 					try {

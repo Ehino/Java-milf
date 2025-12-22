@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import models.Altushka;
+import models.Milfa;
 import models.UserEmployer;
 
 public class WindowsLogin extends JFrame {
@@ -79,11 +81,17 @@ public class WindowsLogin extends JFrame {
                     "Неверный логин или пароль, либо такого пользователя не существует.", 
                     "Ошибка входа", JOptionPane.ERROR_MESSAGE);
             } else {
-                if(userRole == "Altushka"){
-                    dispose();   
-                } 
-                if(userRole == "Milfa"){
+                if(userRole.equals("Altushka")){
+                    Altushka altushka = dbHandler.getInfoAlt(login); 
+
                     dispose();
+                    new MainAlt(altushka).setVisible(true);
+                } 
+                if(userRole.equals("Milfa")){
+                    Milfa milfa = dbHandler.getInfoMilf(login);
+
+                    dispose();
+                    new MainMilf(milfa).setVisible(true);
                 } 
                 if(userRole.equals("Employer")){
                     UserEmployer employer = dbHandler.getInfoEmp(login);

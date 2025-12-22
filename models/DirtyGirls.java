@@ -4,7 +4,7 @@ public abstract class DirtyGirls {
 	private static int id;
 	private static int lastId;
 	protected  String password;
-	protected String name, city;
+	protected String name, city, girlType;
 	protected int age;
 	protected boolean cooking;
 
