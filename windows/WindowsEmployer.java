@@ -12,7 +12,7 @@ import utils.SaveUsers;
 public class WindowsEmployer extends JFrame {
 
     JLabel nameLabel, passwordLabel, cityLabel, companyLabel, jobLabel, girlTypeLabel, requirementsLabel, statusLabel;
-    JTextField nameField, cityField, companyField, jobField, requirementsField;
+    JTextField nameField, cityField, companyField, jobField, requirementsField; 
     JPasswordField passwordField;
     JComboBox<String> girlTypeCombo;
     JCheckBox statusCheckBox;
@@ -145,6 +145,7 @@ public class WindowsEmployer extends JFrame {
                 try {
 
                     dbHandler.singUpEUser(name, password, city, companyName, jobDescribe, girlType, requirements, advertStatus);
+                    dbHandler.addVacancy(employer.getName(), jobDescribe, girlType, requirements);
 
                 } catch (ClassNotFoundException ex) {
                     ex.printStackTrace();

@@ -32,4 +32,12 @@ public class Const {
 	public static final String EUSER_GIRLTYPE = "girltype";
 	public static final String EUSER_REQUIREMENTS = "requirements";
 	public static final String EUSER_ASTATUS = "advertStatus";
+
+	public static final String VACANCY_TABLE = "Vacancy";
+	public static final String VACANCY_ID = "idVacancy";
+	public static final String VACANCY_LOGIN = "loginEmp";
+	public static final String VACANCY_JDESCRIBE = "jobDescribe";;
+	public static final String VACANCY_GIRLTYPE = "girlType";
+	public static final String VACANCY_REQUIREMENTS = "requirements";
+	public static final String VACANCY_ASTATUS = "advertStatus";
 }

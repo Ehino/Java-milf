@@ -1,12 +1,14 @@
-import database.DatabaseHandler;
-import models.Milfa;
-import windows.MainMilf;
+
+import windows.FirstWindows;
+
+
+
 
 
 public class Main {
 	public static void main(String[] args){
-		/* FirstWindows firstWindows = new FirstWindows();
-		firstWindows.setVisible(true); */
+		FirstWindows firstWindows = new FirstWindows();
+		firstWindows.setVisible(true);
 		
 
 
@@ -15,13 +17,20 @@ public class Main {
 
 		Altushka altushka = dbHandler.getInfoAlt("AltD");            
         new MainAlt(altushka).setVisible(true);
- */
+ 		*/
 
-		DatabaseHandler dbHandler = new DatabaseHandler();
+		/* DatabaseHandler dbHandler = new DatabaseHandler();
         String userRole = dbHandler.ResultUser("Milf", "1234");
 
 		Milfa milfa = dbHandler.getInfoMilf("Milf");            
-        new MainMilf(milfa).setVisible(true); 
-	}
+        new MainMilf(milfa).setVisible(true);  */
+
+		/* DatabaseHandler dbHandler = new DatabaseHandler();
+		String userRole = dbHandler.ResultUser("Elnur", "12345");
+
+		UserEmployer employer = dbHandler.getInfoEmp("Elnur");            
+		new MainEmp(employer).setVisible(true); */
+	} 
 }
+
 
