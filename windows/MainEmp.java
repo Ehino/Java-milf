@@ -60,7 +60,7 @@ public class MainEmp extends JFrame {
 
         aLabel = new JLabel("Ваши вакансии"); 
         
-        RefreshVacancies.refreshVacancies(container, employer.getName());
+        RefreshVacancies.refreshVacancies(container, "Работодатель",employer.getName());
     }
 
     class AddVacancyButtonListener implements ActionListener {
@@ -71,7 +71,7 @@ public class MainEmp extends JFrame {
             addVacancyWindow.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-                    RefreshVacancies.refreshVacancies(getContentPane(), employer.getName());
+                    RefreshVacancies.refreshVacancies(getContentPane(),"Работодатель", employer.getName());
                 }
             });
         }

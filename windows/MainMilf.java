@@ -67,7 +67,7 @@ public class MainMilf extends JFrame{
 		container.add(girlTypeLabel);
 		container.add(aLabel);
 
-		RefreshVacancies.refreshVacancies(container, "Милфа");
+		RefreshVacancies.refreshVacancies(container, "Милфа", milfa.getName());
 
 	}
 }

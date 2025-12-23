@@ -2,12 +2,13 @@ package utils;
 
 import database.DatabaseHandler;
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.*;
 
 public class RefreshVacancies{
 
-    public static void refreshVacancies(Container container, String vacancyLogin) {
+    public static void refreshVacancies(Container container, String userRole, String login) {
         Component[] components = container.getComponents();
         for (Component comp : components) {
             if (comp instanceof JScrollPane) {
@@ -20,16 +21,16 @@ public class RefreshVacancies{
 
         Font font = new Font("Arial", Font.ITALIC, 16);
 
-        JButton buttonStatus, replyButton;
+        JButton buttonStatus, responsesButton;
         DatabaseHandler dbHandler = new DatabaseHandler();
         List<String[]> allVacancies;
 
-        if(vacancyLogin.equals("Милфа")){
+        if(userRole.equals("Милфа")){
             allVacancies = dbHandler.getFilterVacancies("Милфа", true);
-        } else if(vacancyLogin.equals("Альтушка")){
+        } else if(userRole.equals("Альтушка")){
             allVacancies = dbHandler.getFilterVacancies("Альтушка", true);
         } else {
-            allVacancies = dbHandler.getEmployerVacancies(vacancyLogin);
+            allVacancies = dbHandler.getEmployerVacancies(login);
         }
 
         
@@ -82,12 +83,12 @@ public class RefreshVacancies{
                 card.add(jobDescribeLabel);
                 card.add(requirementsLabel);
                 card.add(advertStatusLabel);
-                if(!vacancyLogin.equals("Милфа") && !vacancyLogin.equals("Альтушка")){   
+                if(!userRole.equals("Милфа") && !userRole.equals("Альтушка")){   
                     if(vac[4].equals("Активна")){
                         buttonStatus = new JButton("Отключить вакансию");
                         buttonStatus.addActionListener(e -> {
                             dbHandler.updateVacancyStatus(Integer.parseInt(vac[0]), false);
-                            refreshVacancies(container, vacancyLogin);
+                            refreshVacancies(container,"Работодатель", login);
                             
                         });
                         advertStatusLabel.setFont(font);
@@ -96,15 +97,40 @@ public class RefreshVacancies{
                         buttonStatus = new JButton("Включить вакансию");
                         buttonStatus.addActionListener(e -> {
                             dbHandler.updateVacancyStatus(Integer.parseInt(vac[0]), true);
-                            refreshVacancies(container, vacancyLogin);
+                            refreshVacancies(container,"Работодатель", login);
                         });
                         advertStatusLabel.setFont(font);
                         card.add(buttonStatus);
                     }
                 } else {
-                    replyButton = new JButton("Откликнуться");
-                    replyButton.setFont(font);
-                    card.add(replyButton);
+                    boolean statusResponses = dbHandler.statusResponses(Integer.parseInt(vac[0]), login);
+
+                    if(statusResponses){
+                        responsesButton = new JButton("Отменить отклик");
+                        responsesButton.addActionListener(e ->{
+                            try {
+                                dbHandler.deleteResponses(Integer.parseInt(vac[0]), login);
+                            } catch (ClassNotFoundException | SQLException e1) {
+                                e1.printStackTrace();
+                            }
+                            refreshVacancies(container,userRole, login);
+                        });
+                        responsesButton.setFont(font);
+                        card.add(responsesButton);
+                    } else{
+                        responsesButton = new JButton("Откликнуться");
+                        responsesButton.addActionListener(e ->{
+                            try {
+                                dbHandler.addResponses(Integer.parseInt(vac[0]), login, userRole, true);
+                                refreshVacancies(container,userRole, login);
+                            } catch (ClassNotFoundException | SQLException e1) {
+                                e1.printStackTrace();
+                            }
+
+                        });
+                        responsesButton.setFont(font);
+                        card.add(responsesButton);
+                    }
                 }
                 listPanel.add(card);
                 listPanel.add(Box.createRigidArea(new Dimension(0, 10)));

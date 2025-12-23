@@ -38,7 +38,7 @@ public class DatabaseHandler extends Configs{
 		return dbConnectionEmployer;
 	}
 
-	public void singUpAlt(String name, String password, String city, int age, boolean cooking, int countBoyfriend) throws ClassNotFoundException, SQLException{
+	public void addAlt(String name, String password, String city, int age, boolean cooking, int countBoyfriend) throws ClassNotFoundException, SQLException{
 		String insert = "INSERT INTO " + Const.ALT_TABLE + "(" + Const.ALT_NAME + "," + Const.ALT_PASSWORD + "," + Const.ALT_CITY + "," 
 		+ Const.ALT_AGE + "," + Const.ALT_COOKING + "," 
 		+ Const.ALT_CBOYFRIEND + "," + Const.ALT_GIRLTYPE + ")" + "VALUES(?,?,?,?,?,?,?)";
@@ -64,7 +64,7 @@ public class DatabaseHandler extends Configs{
 		
 	}
 
-	public void singUpMilf(String name, String password, String city, int age, boolean cooking,int children, int husband) throws ClassNotFoundException, SQLException{
+	public void addMilf(String name, String password, String city, int age, boolean cooking,int children, int husband) throws ClassNotFoundException, SQLException{
 		String insert = "INSERT INTO " + Const.MILF_TABLE + "(" + Const.MILF_NAME + "," + Const.MILF_PASSWORD + "," + Const.MILF_CITY + "," 
 		+ Const.MILF_AGE + "," + Const.MILF_COOKING + "," 
 		+ Const.MILF_CHILDREN + "," + Const.MILF_HUSBAND + "," + Const.MILF_GIRLTYPE + ")" + "VALUES(?,?,?,?,?,?,?,?)";
@@ -91,7 +91,7 @@ public class DatabaseHandler extends Configs{
 		
 	}
 
-    public void singUpEUser(String name, String password, String city, String companyName, String jobDescribe, String girlType, String requirements, boolean advertStatus) throws ClassNotFoundException, SQLException{
+    public void addEUser(String name, String password, String city, String companyName, String jobDescribe, String girlType, String requirements, boolean advertStatus) throws ClassNotFoundException, SQLException{
 		String insert = "INSERT INTO " + Const.EUSER_TABLE + "(" + Const.EUSER_NAME + "," + Const.EUSER_PASSWORD + "," + Const.EUSER_CITY + "," 
 		+ Const.EUSER_CNAME + "," + Const.EUSER_JDESCRIBE + "," 
 		+ Const.EUSER_GIRLTYPE + "," + Const.EUSER_REQUIREMENTS + "," + Const.EUSER_ASTATUS + ")" + "VALUES(?,?,?,?,?,?,?,?)";
@@ -136,8 +136,30 @@ public class DatabaseHandler extends Configs{
         }
     }
 
+    public void addResponses(int idVacancy, String girlName, String girlType, Boolean responsesStatus) throws ClassNotFoundException, SQLException{
+		String insert = "INSERT INTO " + Const.RESPONSES_TABLE + "(" + Const.RESPONSES_ID_VACANCY + "," + Const.RESPONSES_GIRL_NAME + "," + Const.RESPONSES_GIRL_TYPE + "," 
+		+ Const.RESPONSES_STATUS + ")" + "VALUES(?,?,?,?)";
+	
+		PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(insert);
+		try {
+            
+            prSt.setInt(1, idVacancy);
+            prSt.setString(2, girlName);
+            prSt.setString(3, girlType);
+            prSt.setBoolean(4, responsesStatus);
+
+            prSt.executeUpdate();
+            System.out.println("Данные успешно добавлены в базу!");
+
+        } catch (SQLException e) {
+            System.err.println("Ошибка SQL: " + e.getMessage());
+            e.printStackTrace();
+        }
+		
+	}
+
     public String ResultUser(String login, String password) {
-    ResultSet resSet = null;
+        ResultSet resSet = null;
 
         String selectAlt = "SELECT * FROM " + Const.ALT_TABLE + " WHERE " +
                 Const.ALT_NAME + "=? AND " + Const.ALT_PASSWORD + "=?";
@@ -341,9 +363,30 @@ public class DatabaseHandler extends Configs{
         return vacancies;
     }
 
+    public boolean statusResponses(int idVacancy, String girlName){
+        ResultSet resSet = null;
+
+        String select = "SELECT * FROM " + Const.RESPONSES_TABLE  + " WHERE " +
+            Const.RESPONSES_ID_VACANCY + "=? AND " + Const.RESPONSES_GIRL_NAME + "=?";
+            
+        try {
+            PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(select);
+            prSt.setInt(1, idVacancy);
+            prSt.setString(2, girlName);
+
+            resSet = prSt.executeQuery();
+            if(resSet.next()){
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public List<String[]> getFilterVacancies(String vacancyGirltype, boolean vacancyAStatus) {
         List<String[]> vacancies = new ArrayList<>();
-        String select = "SELECT * FROM " + Const.VACANCY_TABLE + " WHERE " + Const.VACANCY_GIRLTYPE + "=? AND " + Const.VACANCY_ASTATUS + "=?";
+        String select = "SELECT * FROM " + Const.VACANCY_TABLE + " WHERE (" + Const.VACANCY_GIRLTYPE + "=? OR " + Const.VACANCY_GIRLTYPE + "='Любой') AND " + Const.VACANCY_ASTATUS + "=?";
 
         try {
             PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(select);
@@ -381,6 +424,47 @@ public class DatabaseHandler extends Configs{
             prSt.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+    public List<String[]> getOneVacancies(int idVacancy) {
+        List<String[]> vacancies = new ArrayList<>();
+        String select = "SELECT * FROM " + Const.VACANCY_TABLE + " WHERE " + Const.VACANCY_ID + "=?";
+
+        try {
+            PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(select);
+            prSt.setInt(1, idVacancy);
+            ResultSet resSet = prSt.executeQuery();
+
+            if (resSet.next()) {
+                int vacancy_id = resSet.getInt(Const.VACANCY_ID);
+                boolean isActive = resSet.getBoolean(Const.VACANCY_ASTATUS);
+
+                vacancies.add(new String[]{
+                    String.valueOf(resSet.getInt(Const.VACANCY_ID)),
+                    resSet.getString(Const.VACANCY_GIRLTYPE),
+                    resSet.getString(Const.VACANCY_JDESCRIBE),
+                    resSet.getString(Const.VACANCY_REQUIREMENTS),
+                    isActive ? "Активна" : "Закрыта"
+                });
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return vacancies;
+    }
+
+    public void deleteResponses(int idVacancy, String girlName) throws SQLException, ClassNotFoundException {
+        String query = "DELETE FROM " + Const.RESPONSES_TABLE + " WHERE " + Const.RESPONSES_ID_VACANCY + "=? AND " + Const.RESPONSES_GIRL_NAME + "=?";
+        try {
+            PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(query);
+
+            prSt.setInt(1, idVacancy);
+            prSt.setString(2, girlName);
+
+            prSt.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) { 
+            e.printStackTrace(); 
         }
     }
 } 

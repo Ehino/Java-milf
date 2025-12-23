@@ -12,7 +12,7 @@ public class WindowsAddVacancy extends JFrame {
 
     JLabel girlTypeLabel, jDescribeLabel, requirementsLabel;
     JTextArea jDescribeArea, requirementsArea;
-    JButton addButton, backButton;
+    JButton addButton;
     UserEmployer employer;
     JComboBox<String> girlTypeCombo;
 
@@ -79,8 +79,12 @@ public class WindowsAddVacancy extends JFrame {
             String requirements = requirementsArea.getText();
 
 
-            if(girlType.isEmpty() || jobDescribe.isEmpty() || requirements.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Заполните все поля!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+            if(jobDescribe.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Заполните описание вакансии!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if(requirements.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Заполните требования вакансии!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 

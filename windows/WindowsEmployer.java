@@ -144,7 +144,7 @@ public class WindowsEmployer extends JFrame {
 
                 try {
 
-                    dbHandler.singUpEUser(name, password, city, companyName, jobDescribe, girlType, requirements, advertStatus);
+                    dbHandler.addEUser(name, password, city, companyName, jobDescribe, girlType, requirements, advertStatus);
                     dbHandler.addVacancy(employer.getName(), jobDescribe, girlType, requirements);
 
                 } catch (ClassNotFoundException ex) {

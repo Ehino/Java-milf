@@ -212,7 +212,7 @@ public class WindowsGirls extends JFrame{
 					SaveUsers.saveDitryGirls(milf);
 					try {
 						
-						dbHandler.singUpMilf(name, password, city, age, cooking, children, husbands);
+						dbHandler.addMilf(name, password, city, age, cooking, children, husbands);
 
 					} catch (ClassNotFoundException ex) {
 						ex.printStackTrace();
@@ -244,7 +244,7 @@ public class WindowsGirls extends JFrame{
 					SaveUsers.saveDitryGirls(alt);
 					try {
 						
-						dbHandler.singUpAlt(name, password, city, age, cooking, boyfriends);
+						dbHandler.addAlt(name, password, city, age, cooking, boyfriends);
 
 					} catch (ClassNotFoundException ex) {
 						ex.printStackTrace();

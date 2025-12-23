@@ -10,7 +10,6 @@ public class MainAlt extends JFrame{
 
 	JLabel nameLabel, cityLabel, ageLabel, cookingLabel, cBoyFrinedLabel, girlTypeLabel, aLabel;
 	JLabel headLabel;
-	JPanel dopPanel;
 
 
 	Font font = new Font("Arial", Font.ITALIC, 16);
@@ -63,7 +62,7 @@ public class MainAlt extends JFrame{
 		container.add(girlTypeLabel);
 		container.add(aLabel);
 
-		RefreshVacancies.refreshVacancies(container, "Альтушка");
+		RefreshVacancies.refreshVacancies(container, "Альтушка", altushka.getName());
 	}
 }
 
