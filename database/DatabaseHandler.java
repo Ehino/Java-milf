@@ -324,9 +324,11 @@ public class DatabaseHandler extends Configs{
             ResultSet resSet = prSt.executeQuery();
 
             while (resSet.next()) {
+                int idVacancy = resSet.getInt(Const.VACANCY_ID);
                 boolean isActive = resSet.getBoolean(Const.VACANCY_ASTATUS);
 
                 vacancies.add(new String[]{
+                    String.valueOf(resSet.getInt(Const.VACANCY_ID)),
                     resSet.getString(Const.VACANCY_GIRLTYPE),
                     resSet.getString(Const.VACANCY_JDESCRIBE),
                     resSet.getString(Const.VACANCY_REQUIREMENTS),
@@ -353,6 +355,7 @@ public class DatabaseHandler extends Configs{
                 boolean isActive = resSet.getBoolean(Const.VACANCY_ASTATUS);
 
                 vacancies.add(new String[]{
+                    String.valueOf(resSet.getInt(Const.VACANCY_ID)),
                     resSet.getString(Const.VACANCY_GIRLTYPE),
                     resSet.getString(Const.VACANCY_JDESCRIBE),
                     resSet.getString(Const.VACANCY_REQUIREMENTS),
@@ -363,5 +366,21 @@ public class DatabaseHandler extends Configs{
             e.printStackTrace();
         }
         return vacancies;
+    }
+
+    public void updateVacancyStatus(int vacancyId, boolean isActive) {
+        String update = "UPDATE " + Const.VACANCY_TABLE + " SET " + 
+                    Const.VACANCY_ASTATUS + " = ? " +
+                    "WHERE " + Const.VACANCY_ID + " = ?";
+        
+        try {
+            PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(update);
+            prSt.setBoolean(1, isActive);
+            prSt.setInt(2, vacancyId);
+            
+            prSt.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 } 

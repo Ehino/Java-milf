@@ -9,8 +9,11 @@ import windows.MainMilf;
 
 public class Main {
 	public static void main(String[] args){
-		String role = "Alt";
-		String login = "AltD";
+		String role = "Emp", login = "Elnur";
+
+		//String role = "Alt", login = "Alt";
+
+		//String role = "Milfa", login = "Milfa"; 
 
 		DatabaseHandler dbHandler = new DatabaseHandler();
 	
