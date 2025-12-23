@@ -1,6 +1,6 @@
-    package utils;
+package utils;
 
-    import database.DatabaseHandler;
+import database.DatabaseHandler;
 import java.awt.*;
 import java.util.List;
 import javax.swing.*;
