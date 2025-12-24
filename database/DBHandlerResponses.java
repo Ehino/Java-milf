@@ -74,6 +74,28 @@ public class DBHandlerResponses extends DatabaseHandler{
         return vacancyIds;
     }
 
+    public List<String[]> getIdActiveVacancyResponses(boolean active) {
+        List<String[]> activeVacancies = new ArrayList<>();
+        String select = "SELECT DISTINCT " + Const.RESPONSES_ID_VACANCY + "," + Const.RESPONSES_GIRL_NAME + "," +
+        Const.RESPONSES_GIRL_TYPE + " FROM " + Const.RESPONSES_TABLE + " WHERE " + Const.RESPONSES_STATUS + "=?";
+        
+        try {
+            PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(select);
+            prSt.setBoolean(1, active);
+            ResultSet resSet = prSt.executeQuery();
+            while (resSet.next()){
+                activeVacancies.add(new String[]{
+                    String.valueOf(resSet.getInt(Const.RESPONSES_ID_VACANCY)),
+                    resSet.getString(Const.RESPONSES_GIRL_NAME),
+                    resSet.getString(Const.RESPONSES_GIRL_TYPE)
+                });
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return activeVacancies;
+    }
+
     public List<String[]> responsesVacancy(int idVacancy){
         List<String[]> responsesVacancy = new ArrayList<>();
         String select = "SELECT * FROM " + Const.RESPONSES_TABLE + " WHERE " + Const.RESPONSES_ID_VACANCY + "=?";
@@ -88,7 +110,8 @@ public class DBHandlerResponses extends DatabaseHandler{
                     String.valueOf(resSet.getInt(Const.RESPONSES_ID)),  
                     resSet.getString(Const.RESPONSES_GIRL_NAME),       
                     resSet.getString(Const.RESPONSES_GIRL_TYPE),        
-                    String.valueOf(resSet.getBoolean(Const.RESPONSES_STATUS))
+                    String.valueOf(resSet.getBoolean(Const.RESPONSES_STATUS)),
+                    resSet.getString(Const.RESPONSES_TELEGRAMM)
                 });
             }
 

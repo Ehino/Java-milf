@@ -21,7 +21,7 @@ public class WindowsEditEmployer extends JFrame {
     public WindowsEditEmployer(UserEmployer employer) {
         super("Редактирование профиля");
         this.employer = employer;
-        this.dbHandler = new DBHandlerEmployer();
+        DBHandlerEmployer dbHandlerEmployer = new DBHandlerEmployer();
         
         setBounds(550, 150, 700, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -104,7 +104,8 @@ public class WindowsEditEmployer extends JFrame {
         saveButton.addActionListener(e -> saveChanges());
         backButton.addActionListener(e ->{
             dispose();
-            new WindowsMainEmp(employer).setVisible(true);
+            UserEmployer freshEmployer = dbHandlerEmployer.getInfoEmp(employer.getName());
+            new WindowsMainEmp(freshEmployer).setVisible(true);
         });
 
         container.add(titleLabel);
@@ -193,7 +194,6 @@ public class WindowsEditEmployer extends JFrame {
 
         DBHandlerEmployer dbHandlerEmployer = new DBHandlerEmployer();
         UserEmployer updateEmployer = dbHandlerEmployer.getInfoEmp(employer.getName());
-
         new WindowsMainEmp(updateEmployer).setVisible(true);
     }
 }

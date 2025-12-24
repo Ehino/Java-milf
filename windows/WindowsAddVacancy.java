@@ -1,7 +1,7 @@
 package windows;
 
+import database.DBHandlerEmployer;
 import database.DBHandlerVacancy;
-import database.DatabaseHandler;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +13,7 @@ public class WindowsAddVacancy extends JFrame {
 
     JLabel girlTypeLabel, jDescribeLabel, requirementsLabel;
     JTextArea jDescribeArea, requirementsArea;
-    JButton addButton;
+    JButton addButton, backButton;
     UserEmployer employer;
     JComboBox<String> girlTypeCombo;
 
@@ -47,13 +47,17 @@ public class WindowsAddVacancy extends JFrame {
         JScrollPane reqScroll = new JScrollPane(requirementsArea);
 
         addButton = new JButton("Опубликовать");
-        addButton.addActionListener(new Publication());
+        backButton = new JButton("Назад");
+
+        addButton.addActionListener(new PublicationButtonLisner());
+        backButton.addActionListener(new BackbuttonLisner());
 
         girlTypeLabel.setFont(font);
         girlTypeCombo.setFont(font);
         jDescribeLabel.setFont(font);
         requirementsLabel.setFont(font);
         addButton.setFont(font);
+        backButton.setFont(font);
 
         girlTypeLabel.setBounds(100, 100, 200, 30);
         girlTypeCombo.setBounds(300, 100, 200, 30);
@@ -62,6 +66,7 @@ public class WindowsAddVacancy extends JFrame {
         requirementsLabel.setBounds(100, 350, 200, 30);
         reqScroll.setBounds(100, 400, 400, 100);
         addButton.setBounds(100, 550, 400, 30);
+        backButton.setBounds(100, 590, 400, 30);
 
         container.add(girlTypeLabel);
         container.add(girlTypeCombo);
@@ -70,9 +75,10 @@ public class WindowsAddVacancy extends JFrame {
         container.add(requirementsLabel);
         container.add(reqScroll);
         container.add(addButton);
+        container.add(backButton);
     }
 
-    class Publication implements ActionListener {
+    class PublicationButtonLisner implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             String girlType = (String) girlTypeCombo.getSelectedItem();
@@ -89,13 +95,29 @@ public class WindowsAddVacancy extends JFrame {
                 return;
             }
 
-            DatabaseHandler dbHandler = new DatabaseHandler();
+
             DBHandlerVacancy dbHandlerVacancy = new DBHandlerVacancy();
 
             dbHandlerVacancy.addVacancy(employer.getName(), jobDescribe, girlType, requirements);
 
             JOptionPane.showMessageDialog(null, "Вакансия добавлена!");
+            
             dispose();
+
+            DBHandlerEmployer dbHandlerEmployer = new DBHandlerEmployer();
+            UserEmployer updateEmployer = dbHandlerEmployer.getInfoEmp(employer.getName());
+            new WindowsMainEmp(updateEmployer).setVisible(true);
+        }
+    }
+    
+    class BackbuttonLisner implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dispose();
+
+            DBHandlerEmployer dbHandlerEmployer = new DBHandlerEmployer();
+            UserEmployer updateEmployer = dbHandlerEmployer.getInfoEmp(employer.getName());
+            new WindowsMainEmp(updateEmployer).setVisible(true);
         }
     }
 }

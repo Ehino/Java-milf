@@ -41,7 +41,7 @@ public class Const {
 	public static final String VACANCY_REQUIREMENTS = "requirements";
 	public static final String VACANCY_ASTATUS = "advertStatus";
 
-	public static final String RESPONSES_TABLE = "Responses";
+	public static final String RESPONSES_TABLE = "Responses";                                                                               
 	public static final String RESPONSES_ID = "id";
 	public static final String RESPONSES_ID_VACANCY = "idVacancy";
 	public static final String RESPONSES_GIRL_NAME = "girlName";

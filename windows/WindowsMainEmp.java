@@ -1,9 +1,13 @@
 package windows;
 
+import database.DBHandlerResponses;
+import database.DBHandlerVacancy;
 import database.DatabaseHandler;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import models.UserEmployer;
 import utils.RefreshVacancies;
@@ -19,8 +23,13 @@ public class WindowsMainEmp extends JFrame {
     Font font20 = new Font("Arial", Font.ITALIC, 20);
 
     DatabaseHandler dbHandler = new DatabaseHandler();
+    DBHandlerResponses dbHandlerResponses = new DBHandlerResponses();
+    DBHandlerVacancy dbHandlerVacancy = new DBHandlerVacancy();
 
     UserEmployer employer;
+
+    List<String[]> activeVacancies = new ArrayList<>();
+    List<String[]> allVacancies = new ArrayList<>();
 
     public WindowsMainEmp(UserEmployer employer) {
         super("Employer окно профиля");
@@ -56,7 +65,16 @@ public class WindowsMainEmp extends JFrame {
 
         addVacancyButton = new JButton("Добавить вакансию");
         editProfileButton = new JButton("Редактировать профиль");
-        responsesButton = new JButton("Посмотреть отклики");
+
+        
+        activeVacancies = dbHandlerResponses.getIdActiveVacancyResponses(true);
+
+        for(String[] actvac : activeVacancies){
+            allVacancies.addAll(dbHandlerVacancy.getFilterEmployerResponsesVacancies(Integer.parseInt(actvac[0]), employer.getName()));
+        }
+
+        int sizeVacancies = allVacancies.size();
+        responsesButton = new JButton("Посмотреть отклики " + sizeVacancies);
 
         addVacancyButton.setFont(font);
         editProfileButton.setFont(font);
@@ -69,6 +87,10 @@ public class WindowsMainEmp extends JFrame {
         
         addVacancyButton.addActionListener(new addVacancyButtonListener());
         editProfileButton.addActionListener(new editProfileButtonLisner());
+        responsesButton.addActionListener(e ->{
+            dispose();
+            new WindowsResponsesVacancy(employer.getName(), employer.getPassword()).setVisible(true);
+        });
 
         container.add(addVacancyButton);
         container.add(editProfileButton);
@@ -79,21 +101,16 @@ public class WindowsMainEmp extends JFrame {
         aLabel.setFont(font20);
         aLabel.setBounds(190, 260, 250, 30); 
         container.add(aLabel);
-        
+
         RefreshVacancies.refreshVacancies(container, dbHandler.getUserRole(employer.getName(), employer.getPassword()),employer.getName(), false);
     }
 
     class addVacancyButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            dispose();
             WindowsAddVacancy addVacancyWindow = new WindowsAddVacancy(employer);
             addVacancyWindow.setVisible(true);
-            addVacancyWindow.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-                    RefreshVacancies.refreshVacancies(getContentPane(), dbHandler.getUserRole(employer.getName(), employer.getPassword()), employer.getName(), false);
-                }
-            });
         }
     }
 
