@@ -80,7 +80,7 @@ public class WindowsReg extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             dispose();
-            new FirstWindows().setVisible(true);
+            new WindowsFirst().setVisible(true);
         }
     }
 }

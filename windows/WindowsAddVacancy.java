@@ -1,5 +1,6 @@
 package windows;
 
+import database.DBHandlerVacancy;
 import database.DatabaseHandler;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -89,8 +90,9 @@ public class WindowsAddVacancy extends JFrame {
             }
 
             DatabaseHandler dbHandler = new DatabaseHandler();
+            DBHandlerVacancy dbHandlerVacancy = new DBHandlerVacancy();
 
-            dbHandler.addVacancy(employer.getName(), jobDescribe, girlType, requirements);
+            dbHandlerVacancy.addVacancy(employer.getName(), jobDescribe, girlType, requirements);
 
             JOptionPane.showMessageDialog(null, "Вакансия добавлена!");
             dispose();

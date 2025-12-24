@@ -6,17 +6,15 @@ import models.Milfa;
 import utils.RefreshVacancies;
 
 
-public class MainMilf extends JFrame{
+public class WindowsMainMilf extends JFrame{
 
 	JLabel nameLabel, cityLabel, ageLabel, cookingLabel, childrenLabel, husbandLabel, girlTypeLabel, aLabel;
 	JLabel headLabel;
-	JPanel dopPanel;
-
 
 	Font font = new Font("Arial", Font.ITALIC, 16);
 	Font font20 = new Font("Arial", Font.ITALIC, 20);
 
-	public MainMilf(Milfa milfa){
+	public WindowsMainMilf(Milfa milfa){
 		super("Milf окно профиля");
 		super.setBounds(550, 250, 550, 750);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

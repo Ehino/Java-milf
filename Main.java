@@ -1,33 +1,44 @@
-import database.DatabaseHandler;
+import database.DBHandlerAltushka;
+import database.DBHandlerEmployer;
+import database.DBHandlerMilfa;
 import models.Altushka;
 import models.Milfa;
 import models.UserEmployer;
-import windows.FirstWindows;
-import windows.MainAlt;
-import windows.MainEmp;
-import windows.MainMilf;
+import windows.WindowsEditEmployer;
+import windows.WindowsFirst;
+import windows.WindowsMainAlt;
+import windows.WindowsMainEmp;
+import windows.WindowsMainMilf;
 
 public class Main {
 	public static void main(String[] args){
-		//String role = "Emp", login = "Elnur";
+		String role = "Emp", login = "Elnur";
+		
+		//String role = "EmpEdit", login = "Elnur";
 
-		String role = "Alt", login = "Alt";
+		//String role = "Alt", login = "Alt";
 
 		//String role = "Milfa", login = "Milfa"; 
 
-		DatabaseHandler dbHandler = new DatabaseHandler();
+		DBHandlerMilfa dbHandlerMilfa = new DBHandlerMilfa();
+		DBHandlerEmployer dbHandlerEmployer = new DBHandlerEmployer();
+		DBHandlerAltushka dbHandlerAltushka = new DBHandlerAltushka();
+
 	
 		if (role.equals("Alt")){
-			Altushka altushka = dbHandler.getInfoAlt(login);            
-			new MainAlt(altushka).setVisible(true);
+			Altushka altushka = dbHandlerAltushka.getInfoAlt(login);            
+			new WindowsMainAlt(altushka).setVisible(true);
 		} else if (role.equals("Milfa")) {
-			Milfa milfa = dbHandler.getInfoMilf(login);
-			new MainMilf(milfa).setVisible(true);
+			Milfa milfa = dbHandlerMilfa.getInfoMilf(login);
+			new WindowsMainMilf(milfa).setVisible(true);
 		} else if(role.equals("Emp")){
-			UserEmployer employer = dbHandler.getInfoEmp(login);
-			new MainEmp(employer).setVisible(true);
+			UserEmployer employer = dbHandlerEmployer.getInfoEmp(login);
+			new WindowsMainEmp(employer).setVisible(true);
+		} else if (role.equals("EmpEdit")) {
+			UserEmployer employer = dbHandlerEmployer.getInfoEmp(login);
+			new WindowsEditEmployer(employer).setVisible(true);
 		} else{
-			FirstWindows firstWindows = new FirstWindows();
+			WindowsFirst firstWindows = new WindowsFirst();
 			firstWindows.setVisible(true);
 		}
 	}

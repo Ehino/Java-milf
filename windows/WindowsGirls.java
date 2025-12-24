@@ -1,5 +1,7 @@
 package windows;
 
+import database.DBHandlerAltushka;
+import database.DBHandlerMilfa;
 import database.DatabaseHandler;
 import java.awt.Container;
 import java.awt.Font;
@@ -31,6 +33,8 @@ public class WindowsGirls extends JFrame{
 	JPanel dopPanel;
 	JButton regButton, backButton;
 	DatabaseHandler dbHandler = new DatabaseHandler();
+	DBHandlerMilfa dbHandlerMilfa = new DBHandlerMilfa();
+	DBHandlerAltushka dbHandlerAltushka = new DBHandlerAltushka();
 	
     Font font = new Font("Arial", Font.ITALIC, 16);
     public WindowsGirls(){
@@ -212,7 +216,7 @@ public class WindowsGirls extends JFrame{
 					SaveUsers.saveDitryGirls(milf);
 					try {
 						
-						dbHandler.addMilf(name, password, city, age, cooking, children, husbands);
+						dbHandlerMilfa.addMilf(name, password, city, age, cooking, children, husbands);
 
 					} catch (ClassNotFoundException ex) {
 						ex.printStackTrace();
@@ -227,7 +231,7 @@ public class WindowsGirls extends JFrame{
 					}
 
 					dispose();
-					new FirstWindows().setVisible(true);
+					new WindowsFirst().setVisible(true);
 				} else {
 					String boyfriendsText = boyfriendField.getText();
 
@@ -244,7 +248,7 @@ public class WindowsGirls extends JFrame{
 					SaveUsers.saveDitryGirls(alt);
 					try {
 						
-						dbHandler.addAlt(name, password, city, age, cooking, boyfriends);
+						dbHandlerAltushka.addAlt(name, password, city, age, cooking, boyfriends);
 
 					} catch (ClassNotFoundException ex) {
 						ex.printStackTrace();
@@ -259,7 +263,7 @@ public class WindowsGirls extends JFrame{
 					}
 
 					dispose();
-					new FirstWindows().setVisible(true);
+					new WindowsFirst().setVisible(true);
 				}	
 			}
 		}	

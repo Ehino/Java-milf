@@ -1,5 +1,7 @@
 package utils;
 
+import database.DBHandlerResponses;
+import database.DBHandlerVacancy;
 import database.DatabaseHandler;
 import java.awt.*;
 import java.sql.SQLException;
@@ -21,16 +23,20 @@ public class RefreshVacancies{
 
         Font font = new Font("Arial", Font.ITALIC, 16);
 
-        JButton buttonStatus, responsesButton;
+        JButton buttonStatus, responsesButton, deleteButton;
+
         DatabaseHandler dbHandler = new DatabaseHandler();
+        DBHandlerVacancy dbHandlerVacancy = new DBHandlerVacancy();
+        DBHandlerResponses dbHandlerResponses = new DBHandlerResponses();
+
         List<String[]> allVacancies;
 
         if(userRole.equals("Милфа")){
-            allVacancies = dbHandler.getFilterVacancies("Милфа", true);
+            allVacancies = dbHandlerVacancy.getFilterVacancies("Милфа", true);
         } else if(userRole.equals("Альтушка")){
-            allVacancies = dbHandler.getFilterVacancies("Альтушка", true);
+            allVacancies = dbHandlerVacancy.getFilterVacancies("Альтушка", true);
         } else {
-            allVacancies = dbHandler.getEmployerVacancies(login);
+            allVacancies = dbHandlerVacancy.getEmployerVacancies(login);
         }
 
         
@@ -40,7 +46,6 @@ public class RefreshVacancies{
             noVacanciesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             listPanel.add(Box.createVerticalGlue());
             listPanel.add(noVacanciesLabel);
-            listPanel.add(Box.createVerticalGlue());
         } else {
             for (String[] vac : allVacancies) {
                 if (vac.length < 4) {
@@ -49,12 +54,12 @@ public class RefreshVacancies{
                 }
                 JPanel card = new JPanel();
                 card.setBorder(BorderFactory.createEtchedBorder());
-                card.setLayout(new GridLayout(6, 1));
-                Dimension cardDim = new Dimension(480, 120);
+                card.setLayout(new GridLayout(7, 1));
+                Dimension cardDim = new Dimension(480, 220);
                 card.setPreferredSize(cardDim);
                 card.setMaximumSize(cardDim);
                 card.setMinimumSize(cardDim);
-                card.setMaximumSize(new Dimension(500, 120));
+                card.setMaximumSize(new Dimension(480, 220));
                 card.setBackground(Color.WHITE);
                 card.setAlignmentX(Component.CENTER_ALIGNMENT);
                 
@@ -87,7 +92,7 @@ public class RefreshVacancies{
                     if(vac[4].equals("Активна")){
                         buttonStatus = new JButton("Отключить вакансию");
                         buttonStatus.addActionListener(e -> {
-                            dbHandler.updateVacancyStatus(Integer.parseInt(vac[0]), false);
+                            dbHandlerVacancy.updateVacancyStatus(Integer.parseInt(vac[0]), false);
                             refreshVacancies(container,"Работодатель", login);
                             
                         });
@@ -96,22 +101,31 @@ public class RefreshVacancies{
                     }else {
                         buttonStatus = new JButton("Включить вакансию");
                         buttonStatus.addActionListener(e -> {
-                            dbHandler.updateVacancyStatus(Integer.parseInt(vac[0]), true);
+                            dbHandlerVacancy.updateVacancyStatus(Integer.parseInt(vac[0]), true);
                             refreshVacancies(container,"Работодатель", login);
                         });
                         advertStatusLabel.setFont(font);
                         card.add(buttonStatus);
                     }
+                    deleteButton = new JButton("Удалить вакансию");
+                    deleteButton.addActionListener(e -> {
+                        dbHandlerVacancy.deleteVacancy(Integer.parseInt(vac[0]), login);
+                        refreshVacancies(container,"Работодатель", login);
+                    });
+                    deleteButton.setForeground(Color.RED); 
+                    card.add(deleteButton);
+                    
+                    
                 } else {
-                    boolean statusResponses = dbHandler.statusResponses(Integer.parseInt(vac[0]), login);
+                    boolean statusResponses = dbHandlerResponses.statusResponses(Integer.parseInt(vac[0]), login);
 
                     if(statusResponses){
                         responsesButton = new JButton("Отменить отклик");
                         responsesButton.addActionListener(e ->{
                             try {
-                                dbHandler.deleteResponses(Integer.parseInt(vac[0]), login);
-                            } catch (ClassNotFoundException | SQLException e1) {
-                                e1.printStackTrace();
+                                dbHandlerResponses.deleteResponses(Integer.parseInt(vac[0]), login);
+                            } catch (ClassNotFoundException | SQLException ex) {
+                                ex.printStackTrace();
                             }
                             refreshVacancies(container,userRole, login);
                         });
@@ -120,13 +134,17 @@ public class RefreshVacancies{
                     } else{
                         responsesButton = new JButton("Откликнуться");
                         responsesButton.addActionListener(e ->{
-                            try {
-                                dbHandler.addResponses(Integer.parseInt(vac[0]), login, userRole, true);
-                                refreshVacancies(container,userRole, login);
-                            } catch (ClassNotFoundException | SQLException e1) {
-                                e1.printStackTrace();
+                            String telegramNickname = JOptionPane.showInputDialog(null, "Введите свой никнейм в Telegram:", "Подтверждение отклика", JOptionPane.QUESTION_MESSAGE);
+                            if (telegramNickname != null && !telegramNickname.trim().isEmpty()){
+                                try {
+                                    dbHandlerResponses.addResponses(Integer.parseInt(vac[0]), login, userRole, telegramNickname, true);
+                                    refreshVacancies(container,userRole, login);
+                                } catch (ClassNotFoundException | SQLException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }else if (telegramNickname != null) {
+                                JOptionPane.showMessageDialog(null, "Пожалуйста, введите никнейм в Telegram", "Ошибка", JOptionPane.WARNING_MESSAGE);
                             }
-
                         });
                         responsesButton.setFont(font);
                         card.add(responsesButton);

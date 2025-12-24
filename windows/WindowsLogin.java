@@ -1,5 +1,8 @@
 package windows;
 
+import database.DBHandlerAltushka;
+import database.DBHandlerEmployer;
+import database.DBHandlerMilfa;
 import database.DatabaseHandler;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -73,7 +76,12 @@ public class WindowsLogin extends JFrame {
                 JOptionPane.showMessageDialog(WindowsLogin.this, "Введите логин и пароль!", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            
             DatabaseHandler dbHandler = new DatabaseHandler();
+            DBHandlerEmployer dbHandlerEmployer = new DBHandlerEmployer();
+            DBHandlerMilfa dbHandlerMilfa = new DBHandlerMilfa();
+            DBHandlerAltushka dbHandlerAltushka = new DBHandlerAltushka();
+
             String userRole = dbHandler.ResultUser(login, password);
 
             if (userRole.equals("NotFound")) {
@@ -82,22 +90,22 @@ public class WindowsLogin extends JFrame {
                     "Ошибка входа", JOptionPane.ERROR_MESSAGE);
             } else {
                 if(userRole.equals("Altushka")){
-                    Altushka altushka = dbHandler.getInfoAlt(login); 
+                    Altushka altushka = dbHandlerAltushka.getInfoAlt(login); 
 
                     dispose();
-                    new MainAlt(altushka).setVisible(true);
+                    new WindowsMainAlt(altushka).setVisible(true);
                 } 
                 if(userRole.equals("Milfa")){
-                    Milfa milfa = dbHandler.getInfoMilf(login);
+                    Milfa milfa = dbHandlerMilfa.getInfoMilf(login);
 
                     dispose();
-                    new MainMilf(milfa).setVisible(true);
+                    new WindowsMainMilf(milfa).setVisible(true);
                 } 
                 if(userRole.equals("Employer")){
-                    UserEmployer employer = dbHandler.getInfoEmp(login);
+                    UserEmployer employer = dbHandlerEmployer.getInfoEmp(login);
 
                     dispose();
-                    new MainEmp(employer).setVisible(true);
+                    new WindowsMainEmp(employer).setVisible(true);
                 } 
                     
             }
@@ -109,7 +117,7 @@ public class WindowsLogin extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             dispose();
-            new FirstWindows().setVisible(true);
+            new WindowsFirst().setVisible(true);
         }
     }
 }

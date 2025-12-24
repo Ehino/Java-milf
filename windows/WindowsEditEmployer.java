@@ -1,0 +1,199 @@
+package windows;
+
+import database.DBHandlerEmployer;
+import java.awt.*;
+import javax.swing.*;
+import models.UserEmployer;
+
+public class WindowsEditEmployer extends JFrame {
+    private JLabel titleLabel, loginLabel, passwordLabel, cityLabel, companyNameLabel;
+    private JLabel passwordValueLabel, cityValueLabel, companyNameValueLabel;
+    private JButton saveButton, passwordEditButton, cityEditButton, companyNameEditButton, backButton;
+    private JPasswordField passwordField;
+    private JTextField cityField, companyNameField;
+    private UserEmployer employer;
+    private DBHandlerEmployer dbHandler;
+
+    private Font font = new Font("Arial", Font.PLAIN, 16);
+    private Font titleFont = new Font("Arial", Font.BOLD, 20);
+    private Font smallFont = new Font("Arial", Font.ITALIC, 12);
+
+    public WindowsEditEmployer(UserEmployer employer) {
+        super("Редактирование профиля");
+        this.employer = employer;
+        this.dbHandler = new DBHandlerEmployer();
+        
+        setBounds(550, 150, 700, 400);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setLocationRelativeTo(null);
+
+        Container container = getContentPane();
+        container.setLayout(null);
+
+
+        titleLabel = new JLabel("Редактирование профиля");
+        loginLabel = new JLabel("Логин: " + employer.getName());
+        JLabel loginEditLabel = new JLabel("Редактирование запрещено");
+
+        passwordLabel = new JLabel("Пароль:");
+        passwordValueLabel = new JLabel("********");
+        passwordField = new JPasswordField();
+
+        cityLabel = new JLabel("Город:");
+        cityValueLabel = new JLabel(employer.getCity());
+        cityField = new JTextField(employer.getCity());
+        
+        
+        companyNameLabel = new JLabel("Название компании:");
+        companyNameValueLabel = new JLabel(employer.getCompanyName());
+        companyNameField = new JTextField(employer.getCompanyName());
+
+        saveButton = new JButton("Сохранить изменения");
+        backButton = new JButton("Назад");
+
+        titleLabel.setFont(titleFont);
+        loginLabel.setFont(font);
+        loginEditLabel.setFont(smallFont);
+        loginEditLabel.setForeground(Color.GRAY);
+
+        passwordLabel.setFont(font);
+        passwordValueLabel.setFont(font);
+        passwordField.setFont(font);
+
+        cityLabel.setFont(font);
+        cityValueLabel.setFont(font);
+        cityField.setFont(font);
+
+        companyNameLabel.setFont(font);
+        companyNameValueLabel.setFont(font);
+        companyNameField.setFont(font);
+
+        saveButton.setFont(font);
+        backButton.setFont(font);
+
+        titleLabel.setBounds(150, 20, 300, 30);
+        loginLabel.setBounds(50, 70, 150, 30);
+        loginEditLabel.setBounds(450, 70, 200, 30);
+
+        passwordLabel.setBounds(50, 110, 150, 30);
+        passwordValueLabel.setBounds(250, 110, 150, 30);
+        passwordField.setBounds(250, 110, 150, 30);
+        passwordField.setVisible(false);
+        passwordEditButton = createEditButton(110);
+        passwordEditButton.addActionListener(e -> toggleEditField(passwordValueLabel, passwordField, passwordEditButton, "password"));
+        
+        cityLabel.setBounds(50, 150, 150, 30);
+        cityValueLabel.setBounds(250, 150, 150, 30);
+        cityField.setBounds(250, 150, 150, 30);
+        cityField.setVisible(false);
+        cityEditButton = createEditButton(150);
+        cityEditButton.addActionListener(e -> toggleEditField(cityValueLabel, cityField, cityEditButton, "city"));
+
+        companyNameLabel.setBounds(50, 190, 190, 30);
+        companyNameValueLabel.setBounds(250, 190, 250, 30);
+        companyNameField.setBounds(250, 190, 150, 30);
+        companyNameField.setVisible(false);   
+        companyNameEditButton = createEditButton(190);
+        companyNameEditButton.addActionListener(e -> toggleEditField(companyNameValueLabel, companyNameField, companyNameEditButton, "companyName"));
+
+
+        saveButton.setBounds(355, 270, 250, 40);
+        backButton.setBounds(50, 270, 250, 40);
+
+        saveButton.addActionListener(e -> saveChanges());
+        backButton.addActionListener(e ->{
+            dispose();
+            new WindowsMainEmp(employer).setVisible(true);
+        });
+
+        container.add(titleLabel);
+        container.add(loginLabel);
+        container.add(loginEditLabel);
+        
+        container.add(passwordLabel);
+        container.add(passwordValueLabel);
+        container.add(passwordField);
+        container.add(passwordEditButton);
+        
+        container.add(cityLabel);
+        container.add(cityValueLabel);
+        container.add(cityField);
+        container.add(cityEditButton);
+        
+        container.add(companyNameLabel);
+        container.add(companyNameValueLabel);
+        container.add(companyNameField);
+        container.add(companyNameEditButton);
+
+        container.add(saveButton);
+        container.add(backButton);
+    }
+
+    private JButton createEditButton(int y) {
+        JButton button = new JButton("Редактировать");
+        button.setFont(smallFont);
+        button.setBounds(450, y, 150, 30);
+        return button;
+    }
+
+    private void toggleEditField(JLabel label, JTextField field, JButton button, String fieldType) {
+        label.setVisible(false);
+        field.setVisible(true);
+        field.setText(label.getText());
+        field.requestFocus();
+        button.setText("Отмена");
+        
+        button.removeActionListener(button.getActionListeners()[0]);
+        button.addActionListener(e -> {
+            label.setVisible(true);
+            field.setVisible(false);
+            button.setText("Редактировать");
+            button.removeActionListener(button.getActionListeners()[0]);
+            button.addActionListener(ev -> toggleEditField(label, field, button, fieldType));
+        });
+    }
+
+    private void saveChanges() {
+        if (passwordField.isVisible() && !new String(passwordField.getPassword()).isEmpty()) {
+            String newPassword = new String(passwordField.getPassword());
+            dbHandler.updateEmployerPassword("password", newPassword, employer.getName());
+        } 
+        
+        if (cityField.isVisible() && !cityField.getText().equals(cityValueLabel.getText())) {
+            String newCity = cityField.getText();
+            dbHandler.updateEmployerPassword("city", newCity, employer.getName());
+            cityValueLabel.setText(newCity);
+            employer.setCity(newCity);
+        } 
+        
+        if (companyNameField.isVisible() && !companyNameField.getText().equals(companyNameValueLabel.getText())) {
+            String newCompanyName = companyNameField.getText();
+            dbHandler.updateEmployerPassword("companyName", newCompanyName, employer.getName());
+            companyNameValueLabel.setText(newCompanyName);
+            employer.setCompanyName(newCompanyName);
+        }
+
+        JOptionPane.showMessageDialog(this, "Изменения сохранены успешно!", "Успех", JOptionPane.INFORMATION_MESSAGE);
+        
+
+        passwordField.setVisible(false);
+        passwordValueLabel.setVisible(true);
+        cityField.setVisible(false);
+        cityValueLabel.setVisible(true);
+        companyNameField.setVisible(false);
+        companyNameValueLabel.setVisible(true);
+        
+
+        passwordEditButton.setText("Редактировать");
+        cityEditButton.setText("Редактировать");
+        companyNameEditButton.setText("Редактировать");
+
+        dispose();
+
+        DBHandlerEmployer dbHandlerEmployer = new DBHandlerEmployer();
+        UserEmployer updateEmployer = dbHandlerEmployer.getInfoEmp(employer.getName());
+
+        new WindowsMainEmp(updateEmployer).setVisible(true);
+    }
+}

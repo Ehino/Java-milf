@@ -1,5 +1,7 @@
 package windows;
 
+import database.DBHandlerEmployer;
+import database.DBHandlerVacancy;
 import database.DatabaseHandler;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,6 +20,8 @@ public class WindowsEmployer extends JFrame {
     JCheckBox statusCheckBox;
     JButton regButton, backButton;
     DatabaseHandler dbHandler = new DatabaseHandler();
+    DBHandlerEmployer dbHandlerEmployer = new DBHandlerEmployer();
+    DBHandlerVacancy dbHandlerVacancy = new DBHandlerVacancy();
 
     Font font = new Font("Arial", Font.ITALIC, 16);
 
@@ -144,8 +148,8 @@ public class WindowsEmployer extends JFrame {
 
                 try {
 
-                    dbHandler.addEUser(name, password, city, companyName, jobDescribe, girlType, requirements, advertStatus);
-                    dbHandler.addVacancy(employer.getName(), jobDescribe, girlType, requirements);
+                    dbHandlerEmployer.addEUser(name, password, city, companyName, jobDescribe, girlType, requirements, advertStatus);
+                    dbHandlerVacancy.addVacancy(employer.getName(), jobDescribe, girlType, requirements);
 
                 } catch (ClassNotFoundException ex) {
                     ex.printStackTrace();
@@ -160,7 +164,7 @@ public class WindowsEmployer extends JFrame {
                 }
 
                 dispose();
-                new FirstWindows().setVisible(true);
+                new WindowsFirst().setVisible(true);
             }
         }
     }

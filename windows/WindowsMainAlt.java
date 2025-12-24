@@ -6,7 +6,7 @@ import models.Altushka;
 import utils.RefreshVacancies;
 
 
-public class MainAlt extends JFrame{
+public class WindowsMainAlt extends JFrame{
 
 	JLabel nameLabel, cityLabel, ageLabel, cookingLabel, cBoyFrinedLabel, girlTypeLabel, aLabel;
 	JLabel headLabel;
@@ -15,7 +15,7 @@ public class MainAlt extends JFrame{
 	Font font = new Font("Arial", Font.ITALIC, 16);
 	Font font20 = new Font("Arial", Font.ITALIC, 20);
 
-	public MainAlt(Altushka altushka){
+	public WindowsMainAlt(Altushka altushka){
 		super("Altushka окно профиля");
 		super.setBounds(550, 250, 550, 750);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

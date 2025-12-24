@@ -5,11 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class FirstWindows extends JFrame{
+public class WindowsFirst extends JFrame{
 	
 	Font font = new Font("Arial", Font.ITALIC, 16);
 
-	public FirstWindows(){
+	public WindowsFirst(){
 		super("Milf&Altushka Hunter/Вход или регистрация");
 		super.setBounds(550, 250, 550,300);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

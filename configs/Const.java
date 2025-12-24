@@ -46,5 +46,6 @@ public class Const {
 	public static final String RESPONSES_ID_VACANCY = "idVacancy";
 	public static final String RESPONSES_GIRL_NAME = "girlName";
 	public static final String RESPONSES_GIRL_TYPE = "girlType";
+	public static final String RESPONSES_TELEGRAMM = "telegrammResponses";
 	public static final String RESPONSES_STATUS = "statusResponses";
 }
