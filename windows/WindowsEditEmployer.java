@@ -37,7 +37,7 @@ public class WindowsEditEmployer extends JFrame {
         JLabel loginEditLabel = new JLabel("Редактирование запрещено");
 
         passwordLabel = new JLabel("Пароль:");
-        passwordValueLabel = new JLabel("********");
+        passwordValueLabel = new JLabel(employer.getPassword());
         passwordField = new JPasswordField();
 
         cityLabel = new JLabel("Город:");

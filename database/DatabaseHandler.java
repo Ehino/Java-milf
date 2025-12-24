@@ -33,7 +33,7 @@ public class DatabaseHandler extends Configs{
 		return dbConnectionEmployer;
 	}
 
-    public String ResultUser(String login, String password) {
+    public String getUserRole(String login, String password) {
         ResultSet resSet = null;
 
         String selectAlt = "SELECT * FROM " + Const.ALT_TABLE + " WHERE " +

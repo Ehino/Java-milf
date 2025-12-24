@@ -82,7 +82,7 @@ public class WindowsLogin extends JFrame {
             DBHandlerMilfa dbHandlerMilfa = new DBHandlerMilfa();
             DBHandlerAltushka dbHandlerAltushka = new DBHandlerAltushka();
 
-            String userRole = dbHandler.ResultUser(login, password);
+            String userRole = dbHandler.getUserRole(login, password);
 
             if (userRole.equals("NotFound")) {
                 JOptionPane.showMessageDialog(WindowsLogin.this, 

@@ -4,6 +4,10 @@ import configs.Const;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+
 
 public class DBHandlerResponses extends DatabaseHandler{
     
@@ -51,6 +55,51 @@ public class DBHandlerResponses extends DatabaseHandler{
         return false;
     }
 
+    public List<Integer> getIdVacancyResponses(String girlName) {
+        List<Integer> vacancyIds = new ArrayList<>();
+        String select = "SELECT DISTINCT " + Const.RESPONSES_ID_VACANCY + 
+                    " FROM " + Const.RESPONSES_TABLE + 
+                    " WHERE " + Const.RESPONSES_GIRL_NAME + "=?";
+        
+        try {
+            PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(select);
+            prSt.setString(1, girlName);
+            ResultSet resSet = prSt.executeQuery();
+            while (resSet.next()) {
+                vacancyIds.add(resSet.getInt(Const.RESPONSES_ID_VACANCY));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return vacancyIds;
+    }
+
+    public List<String[]> responsesVacancy(int idVacancy){
+        List<String[]> responsesVacancy = new ArrayList<>();
+        String select = "SELECT * FROM " + Const.RESPONSES_TABLE + " WHERE " + Const.RESPONSES_ID_VACANCY + "=?";
+            
+        try {
+            PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(select);
+            prSt.setInt(1, idVacancy);
+            ResultSet resSet = prSt.executeQuery();
+
+            while(resSet.next()){
+                responsesVacancy.add(new String[]{
+                    String.valueOf(resSet.getInt(Const.RESPONSES_ID)),  
+                    resSet.getString(Const.RESPONSES_GIRL_NAME),       
+                    resSet.getString(Const.RESPONSES_GIRL_TYPE),        
+                    String.valueOf(resSet.getBoolean(Const.RESPONSES_STATUS))
+                });
+            }
+
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return responsesVacancy;
+    }  
+
     public void deleteResponses(int idVacancy, String girlName) throws SQLException, ClassNotFoundException {
         String query = "DELETE FROM " + Const.RESPONSES_TABLE + " WHERE " + Const.RESPONSES_ID_VACANCY + "=? AND " + Const.RESPONSES_GIRL_NAME + "=?";
         try {
@@ -64,5 +113,4 @@ public class DBHandlerResponses extends DatabaseHandler{
             e.printStackTrace(); 
         }
     }
-
 }

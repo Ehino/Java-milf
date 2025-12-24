@@ -1,5 +1,6 @@
 package windows;
 
+import database.DatabaseHandler;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,8 @@ public class WindowsMainEmp extends JFrame {
     Font font = new Font("Arial", Font.ITALIC, 16);
     Font font18 = new Font("Arial", Font.ITALIC, 18);
     Font font20 = new Font("Arial", Font.ITALIC, 20);
+
+    DatabaseHandler dbHandler = new DatabaseHandler();
 
     UserEmployer employer;
 
@@ -77,7 +80,7 @@ public class WindowsMainEmp extends JFrame {
         aLabel.setBounds(190, 260, 250, 30); 
         container.add(aLabel);
         
-        RefreshVacancies.refreshVacancies(container, "Работодатель",employer.getName());
+        RefreshVacancies.refreshVacancies(container, dbHandler.getUserRole(employer.getName(), employer.getPassword()),employer.getName(), false);
     }
 
     class addVacancyButtonListener implements ActionListener {
@@ -88,7 +91,7 @@ public class WindowsMainEmp extends JFrame {
             addVacancyWindow.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-                    RefreshVacancies.refreshVacancies(getContentPane(),"Работодатель", employer.getName());
+                    RefreshVacancies.refreshVacancies(getContentPane(), dbHandler.getUserRole(employer.getName(), employer.getPassword()), employer.getName(), false);
                 }
             });
         }

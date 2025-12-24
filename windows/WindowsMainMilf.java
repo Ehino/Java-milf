@@ -1,5 +1,6 @@
 package windows;
 
+import database.DatabaseHandler;
 import java.awt.*;
 import javax.swing.*;
 import models.Milfa;
@@ -11,8 +12,12 @@ public class WindowsMainMilf extends JFrame{
 	JLabel nameLabel, cityLabel, ageLabel, cookingLabel, childrenLabel, husbandLabel, girlTypeLabel, aLabel;
 	JLabel headLabel;
 
+	JButton editProfileButton, responsesButton;
+
 	Font font = new Font("Arial", Font.ITALIC, 16);
 	Font font20 = new Font("Arial", Font.ITALIC, 20);
+
+	DatabaseHandler dbHandler = new DatabaseHandler();
 
 	public WindowsMainMilf(Milfa milfa){
 		super("Milf окно профиля");
@@ -33,6 +38,8 @@ public class WindowsMainMilf extends JFrame{
         husbandLabel = new JLabel("Количество мужей: " + milfa.getHusband());
 		girlTypeLabel = new JLabel("Тип девушки: Милфа");
 		aLabel = new JLabel("Доступные анкеты");
+		editProfileButton = new JButton("Редактировать профиль");
+		responsesButton = new JButton("Посмотреть отклики");
 		
 		
 		headLabel.setFont(font20);
@@ -45,7 +52,15 @@ public class WindowsMainMilf extends JFrame{
 		girlTypeLabel.setFont(font);
 		aLabel.setFont(font20);
 
-		headLabel.setBounds(225, 30, 300, 30);
+		editProfileButton.setFont(font);
+		responsesButton.setFont(font);
+		//editProfilebButton.addActionListener(e ->);
+		responsesButton.addActionListener(e ->{
+			WindowsResponsesVacancy windowsResponsesVacancy = new WindowsResponsesVacancy(milfa.getName(), milfa.getPassword());
+			windowsResponsesVacancy.setVisible(true);
+		});
+
+		headLabel.setBounds(225, 10, 300, 30);
 		nameLabel.setBounds(50, 50, 300, 30);
 		cityLabel.setBounds(50, 80, 300, 30);
 		ageLabel.setBounds(50, 110, 300, 30);
@@ -53,7 +68,10 @@ public class WindowsMainMilf extends JFrame{
 		childrenLabel.setBounds(50, 170, 300, 30);
         husbandLabel.setBounds(50, 200, 300, 30);
 		girlTypeLabel.setBounds(50, 230, 300, 30);
-		aLabel.setBounds(200, 260, 300, 50);
+		aLabel.setBounds(50, 260, 250, 50);
+
+		editProfileButton.setBounds(250, 50, 250, 30);
+		responsesButton.setBounds(250, 270, 250, 30);
 
 		container.add(headLabel);
 		container.add(nameLabel);
@@ -64,8 +82,10 @@ public class WindowsMainMilf extends JFrame{
         container.add(husbandLabel);
 		container.add(girlTypeLabel);
 		container.add(aLabel);
+		container.add(editProfileButton);
+		container.add(responsesButton);
 
-		RefreshVacancies.refreshVacancies(container, "Милфа", milfa.getName());
+		RefreshVacancies.refreshVacancies(container, dbHandler.getUserRole(milfa.getName(), milfa.getPassword()), milfa.getName(), false);
 
 	}
 }

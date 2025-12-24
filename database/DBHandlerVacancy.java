@@ -54,6 +54,32 @@ public class DBHandlerVacancy extends DatabaseHandler{
         return vacancies;
     }
 
+    public List<String[]> getResponsesVacancies(int idVacancy) {
+        List<String[]> vacancies = new ArrayList<>();
+        String select = "SELECT * FROM " + Const.VACANCY_TABLE + " WHERE " + Const.VACANCY_ID + "=?";
+
+        try {
+            PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(select);
+            prSt.setInt(1, idVacancy);
+            ResultSet resSet = prSt.executeQuery();
+
+            if (resSet.next()) {
+                boolean isActive = resSet.getBoolean(Const.VACANCY_ASTATUS);
+
+                vacancies.add(new String[]{
+                    String.valueOf(resSet.getInt(Const.VACANCY_ID)),
+                    resSet.getString(Const.VACANCY_GIRLTYPE),
+                    resSet.getString(Const.VACANCY_JDESCRIBE),
+                    resSet.getString(Const.VACANCY_REQUIREMENTS),
+                    isActive ? "Активна" : "Закрыта"
+                });
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return vacancies;
+    }
+
     public List<String[]> getFilterVacancies(String vacancyGirltype, boolean vacancyAStatus) {
         List<String[]> vacancies = new ArrayList<>();
         String select = "SELECT * FROM " + Const.VACANCY_TABLE + " WHERE (" + Const.VACANCY_GIRLTYPE + "=? OR " + Const.VACANCY_GIRLTYPE + "='Любой') AND " + Const.VACANCY_ASTATUS + "=?";

@@ -5,12 +5,13 @@ import database.DBHandlerVacancy;
 import database.DatabaseHandler;
 import java.awt.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
 public class RefreshVacancies{
 
-    public static void refreshVacancies(Container container, String userRole, String login) {
+    public static void refreshVacancies(Container container, String userRole, String login, boolean buttonRes) {
         Component[] components = container.getComponents();
         for (Component comp : components) {
             if (comp instanceof JScrollPane) {
@@ -29,16 +30,27 @@ public class RefreshVacancies{
         DBHandlerVacancy dbHandlerVacancy = new DBHandlerVacancy();
         DBHandlerResponses dbHandlerResponses = new DBHandlerResponses();
 
-        List<String[]> allVacancies;
+        List<String[]> allVacancies = new ArrayList<>();
+        List<Integer> idResponsesVacancy = null;
+        
+        if(buttonRes){
+            idResponsesVacancy = dbHandlerResponses.getIdVacancyResponses(login);
 
-        if(userRole.equals("Милфа")){
+            for(Integer idvac : idResponsesVacancy){
+                allVacancies.addAll(dbHandlerVacancy.getResponsesVacancies(idvac));
+            }
+        }else {
+            if(userRole.equals("Milfa")){
             allVacancies = dbHandlerVacancy.getFilterVacancies("Милфа", true);
-        } else if(userRole.equals("Альтушка")){
-            allVacancies = dbHandlerVacancy.getFilterVacancies("Альтушка", true);
-        } else {
-            allVacancies = dbHandlerVacancy.getEmployerVacancies(login);
+            } else if(userRole.equals("Altushka")){
+                allVacancies = dbHandlerVacancy.getFilterVacancies("Альтушка", true);
+            } else {
+                allVacancies = dbHandlerVacancy.getEmployerVacancies(login);
+            } 
         }
 
+
+        
         
         if (allVacancies.isEmpty()) {
             JLabel noVacanciesLabel = new JLabel("Вакансии отсутствуют");
@@ -88,12 +100,12 @@ public class RefreshVacancies{
                 card.add(jobDescribeLabel);
                 card.add(requirementsLabel);
                 card.add(advertStatusLabel);
-                if(!userRole.equals("Милфа") && !userRole.equals("Альтушка")){   
+                if(!userRole.equals("Milfa") && !userRole.equals("Altushka")){   
                     if(vac[4].equals("Активна")){
                         buttonStatus = new JButton("Отключить вакансию");
                         buttonStatus.addActionListener(e -> {
                             dbHandlerVacancy.updateVacancyStatus(Integer.parseInt(vac[0]), false);
-                            refreshVacancies(container,"Работодатель", login);
+                            refreshVacancies(container,"Работодатель", login, false);
                             
                         });
                         advertStatusLabel.setFont(font);
@@ -102,7 +114,7 @@ public class RefreshVacancies{
                         buttonStatus = new JButton("Включить вакансию");
                         buttonStatus.addActionListener(e -> {
                             dbHandlerVacancy.updateVacancyStatus(Integer.parseInt(vac[0]), true);
-                            refreshVacancies(container,"Работодатель", login);
+                            refreshVacancies(container,"Работодатель", login, false);
                         });
                         advertStatusLabel.setFont(font);
                         card.add(buttonStatus);
@@ -110,7 +122,7 @@ public class RefreshVacancies{
                     deleteButton = new JButton("Удалить вакансию");
                     deleteButton.addActionListener(e -> {
                         dbHandlerVacancy.deleteVacancy(Integer.parseInt(vac[0]), login);
-                        refreshVacancies(container,"Работодатель", login);
+                        refreshVacancies(container,"Работодатель", login, false);
                     });
                     deleteButton.setForeground(Color.RED); 
                     card.add(deleteButton);
@@ -127,8 +139,9 @@ public class RefreshVacancies{
                             } catch (ClassNotFoundException | SQLException ex) {
                                 ex.printStackTrace();
                             }
-                            refreshVacancies(container,userRole, login);
+                            refreshVacancies(container,userRole, login, false);
                         });
+                        responsesButton.setForeground(Color.RED);
                         responsesButton.setFont(font);
                         card.add(responsesButton);
                     } else{
@@ -138,7 +151,7 @@ public class RefreshVacancies{
                             if (telegramNickname != null && !telegramNickname.trim().isEmpty()){
                                 try {
                                     dbHandlerResponses.addResponses(Integer.parseInt(vac[0]), login, userRole, telegramNickname, true);
-                                    refreshVacancies(container,userRole, login);
+                                    refreshVacancies(container,userRole, login, false);
                                 } catch (ClassNotFoundException | SQLException ex) {
                                     ex.printStackTrace();
                                 }
@@ -158,7 +171,11 @@ public class RefreshVacancies{
         JScrollPane scrollPane = new JScrollPane(listPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(20, 310, 500, 340);
+        if(buttonRes){
+            scrollPane.setBounds(20,20,500,400);
+        }else{
+            scrollPane.setBounds(20, 310, 500, 340);
+        }
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         container.add(scrollPane);
         container.revalidate();
