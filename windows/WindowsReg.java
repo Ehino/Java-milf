@@ -7,10 +7,10 @@ import javax.swing.*;
 
 public class WindowsReg extends JFrame {
 
-	JRadioButton employerButton, workerButton;
-	JCheckBox checkBox;
-	JButton regButton, backButton;
-	Font font = new Font("Arial", Font.ITALIC, 16);
+	private JRadioButton employerButton, workerButton;
+	private JCheckBox checkBox;
+	private JButton regButton, backButton;
+	private final Font font = new Font("Arial", Font.ITALIC, 16);
 	
 	public WindowsReg(){
 		super("Milf&Altushka Hunter/Регистрация");

@@ -11,11 +11,11 @@ import utils.RefreshResponsesProfile;
 
 public class WindowsResponsesProfile extends JFrame{
 
-    JButton backButton;
+    private JButton backButton;
 
-    Font font = new Font("Arial", Font.ITALIC, 16);
-    Font font18 = new Font("Arial", Font.ITALIC, 18);
-    Font font20 = new Font("Arial", Font.ITALIC, 20);
+    private final Font font = new Font("Arial", Font.ITALIC, 16);
+    private final Font font18 = new Font("Arial", Font.ITALIC, 18);
+    private final Font font20 = new Font("Arial", Font.ITALIC, 20);
 
     
     public WindowsResponsesProfile(int idVacancy, String login){

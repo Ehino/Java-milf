@@ -46,11 +46,11 @@ public class RefreshResponsesProfile {
 
 
         if (responsesProfile.isEmpty()) {
-        JLabel noVacanciesLabel = new JLabel("Откликов нет");
-        noVacanciesLabel.setFont(font);
-        noVacanciesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        listPanel.add(Box.createVerticalGlue());
-        listPanel.add(noVacanciesLabel);
+            JLabel noVacanciesLabel = new JLabel("Откликов нет");
+            noVacanciesLabel.setFont(font);
+            noVacanciesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            listPanel.add(Box.createVerticalGlue());
+            listPanel.add(noVacanciesLabel);
         } else{
             for (String[] prof : responsesProfile){
                 JPanel card = new JPanel();

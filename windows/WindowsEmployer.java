@@ -13,17 +13,17 @@ import utils.SaveUsers;
 
 public class WindowsEmployer extends JFrame {
 
-    JLabel nameLabel, passwordLabel, cityLabel, companyLabel, jobLabel, girlTypeLabel, requirementsLabel, statusLabel;
-    JTextField nameField, cityField, companyField, jobField, requirementsField; 
-    JPasswordField passwordField;
-    JComboBox<String> girlTypeCombo;
-    JCheckBox statusCheckBox;
-    JButton regButton, backButton;
-    DatabaseHandler dbHandler = new DatabaseHandler();
-    DBHandlerEmployer dbHandlerEmployer = new DBHandlerEmployer();
-    DBHandlerVacancy dbHandlerVacancy = new DBHandlerVacancy();
+    private JLabel nameLabel, passwordLabel, cityLabel, companyLabel, jobLabel, girlTypeLabel, requirementsLabel, statusLabel;
+    private JTextField nameField, cityField, companyField, jobField, requirementsField; 
+    private JPasswordField passwordField;
+    private JComboBox<String> girlTypeCombo;
+    private JCheckBox statusCheckBox;
+    private JButton regButton, backButton;
+    private final DatabaseHandler dbHandler = new DatabaseHandler();
+    private final DBHandlerEmployer dbHandlerEmployer = new DBHandlerEmployer();
+    private final DBHandlerVacancy dbHandlerVacancy = new DBHandlerVacancy();
 
-    Font font = new Font("Arial", Font.ITALIC, 16);
+    private final Font font = new Font("Arial", Font.ITALIC, 16);
 
     public WindowsEmployer() {
         super("Регистрация работодателя");

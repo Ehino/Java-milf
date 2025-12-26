@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class WindowsFirst extends JFrame{
 	
-	Font font = new Font("Arial", Font.ITALIC, 16);
+	private Font font = new Font("Arial", Font.ITALIC, 16);
 
 	public WindowsFirst(){
 		super("Milf&Altushka Hunter/Вход или регистрация");

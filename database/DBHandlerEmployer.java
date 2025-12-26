@@ -60,13 +60,10 @@ public class DBHandlerEmployer extends DatabaseHandler {
             return null;
     }
 
-    public void updateEmployerPassword(String field, String edit, String login) {
-        if(field.equals("password")) field = Const.EUSER_PASSWORD;
-        else if (field.equals("city")) field = Const.EUSER_CITY;
-        else if (field.equals("companyName")) field = Const.EUSER_CNAME;
+    public void updateEmployer(String field, String edit, String login) {
         
-        String update = "UPDATE " + Const.EUSER_TABLE + " SET " + field + "=? " +
-            "WHERE " + Const.EUSER_NAME + "=?";
+        String update = "UPDATE " + Const.EUSER_TABLE + " SET " + field + 
+            "=? WHERE " + Const.EUSER_NAME + "=?";
         try {
             PreparedStatement prSt = getDbConnectionEmployer().prepareStatement(update);
             prSt.setString(1, edit);

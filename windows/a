@@ -169,6 +169,19 @@ public class WindowsEditEmployer extends JFrame {
         }
 
         JOptionPane.showMessageDialog(this, "Изменения сохранены успешно!", "Успех", JOptionPane.INFORMATION_MESSAGE);
+        
+
+        passwordField.setVisible(false);
+        passwordValueLabel.setVisible(true);
+        cityField.setVisible(false);
+        cityValueLabel.setVisible(true);
+        companyNameField.setVisible(false);
+        companyNameValueLabel.setVisible(true);
+        
+
+        passwordEditButton.setText("Редактировать");
+        cityEditButton.setText("Редактировать");
+        companyNameEditButton.setText("Редактировать");
 
         dispose();
 

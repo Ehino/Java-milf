@@ -14,13 +14,13 @@ import utils.RefreshVacancies;
 
 public class WindowsMainEmp extends JFrame {
 
-    JLabel nameLabel, cityLabel, cNameLabel;
-    JLabel headLabel, aLabel;
-    JButton addVacancyButton, editProfileButton, responsesButton;
+    private JLabel nameLabel, cityLabel, cNameLabel;
+    private JLabel headLabel, aLabel;
+    private JButton addVacancyButton, editProfileButton, responsesButton;
 
-    Font font = new Font("Arial", Font.ITALIC, 16);
-    Font font18 = new Font("Arial", Font.ITALIC, 18);
-    Font font20 = new Font("Arial", Font.ITALIC, 20);
+    private final Font font = new Font("Arial", Font.ITALIC, 16);
+    private final Font font18 = new Font("Arial", Font.ITALIC, 18);
+    private final Font font20 = new Font("Arial", Font.ITALIC, 20);
 
     DatabaseHandler dbHandler = new DatabaseHandler();
     DBHandlerResponses dbHandlerResponses = new DBHandlerResponses();

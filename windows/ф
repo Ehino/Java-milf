@@ -1,0 +1,425 @@
+package windows;
+
+import database.DBHandlerAltushka;
+import database.DBHandlerMilfa;
+import database.DatabaseHandler;
+import java.awt.*;
+import javax.swing.*;
+import models.Altushka;
+import models.DirtyGirls;
+import models.Milfa;
+
+public class WindowsEditDirtyGirl extends JFrame {
+
+    private JLabel titleLabel, loginLabel, passwordLabel, cityLabel, ageLabel, cookingLabel;
+    private JLabel passwordValueLabel, cityValueLabel, ageValueLabel, cookingValueLabel;
+    private JLabel childrenLabel, childrenValueLabel, husbandLabel, husbandValueLabel, cBoyFriendLabel, cBoyFriendValueLabel;
+    private JCheckBox cookingBox;
+    private JPasswordField passwordField;
+    private JTextField cityField, ageField, childrenField, husbandField, cBoyFriendField;
+    private JButton saveButton, passwordEditButton, cityEditButton, ageEditButton, backButton;
+    private JButton childrenEditButton, husbandEditButton, cBoyFriendEditButton, cookingEditButton;
+    
+
+    private final DatabaseHandler dbHandler = new DatabaseHandler();
+    private final DBHandlerMilfa dbHandlerMilfa = new DBHandlerMilfa();
+    private final DBHandlerAltushka dbHandlerAltushka = new DBHandlerAltushka();
+    
+
+    private final Font font = new Font("Arial", Font.PLAIN, 16);
+    private final Font titleFont = new Font("Arial", Font.BOLD, 20);
+    private final Font smallFont = new Font("Arial", Font.ITALIC, 12);
+
+    public WindowsEditDirtyGirl(String login, String password) {
+        super("Редактирование профиля");
+
+        String userRole = dbHandler.getUserRole(login, password);
+
+        DirtyGirls girl;
+
+        if(userRole.equals("Milfa")){
+            girl = dbHandlerMilfa.getInfoMilf(login);
+        }else {
+            girl = dbHandlerAltushka.getInfoAlt(login);
+        }
+
+        
+        setBounds(550, 150, 700, 500);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setLocationRelativeTo(null);
+
+        Container container = getContentPane();
+        container.setLayout(null);
+
+
+        titleLabel = new JLabel("Редактирование профиля");
+        loginLabel = new JLabel("Логин: " + girl.getName());
+        JLabel loginEditLabel = new JLabel("Редактирование запрещено");
+
+        passwordLabel = new JLabel("Пароль:");
+        passwordValueLabel = new JLabel(girl.getPassword());
+        passwordField = new JPasswordField();
+
+        cityLabel = new JLabel("Город:");
+        cityValueLabel = new JLabel(girl.getCity());
+        cityField = new JTextField();
+        
+        ageLabel = new JLabel("Возраст: ");
+        ageValueLabel = new JLabel(String.valueOf(girl.getAge()));
+        ageField = new JTextField();
+
+        cookingLabel = new JLabel("Умение готовить: ");
+        cookingValueLabel = new JLabel(girl.isCooking()? "Умеет" : "Не умеет");
+
+        if(userRole.equals("Milfa")){
+            Milfa milfa = dbHandlerMilfa.getInfoMilf(login);
+
+            childrenLabel = new JLabel("Количество детей:");
+            childrenValueLabel = new JLabel(String.valueOf(milfa.getChildren()));
+            childrenField = new JTextField();
+            
+            husbandLabel = new JLabel("Количество мужей:");
+            husbandValueLabel = new JLabel(String.valueOf(milfa.getHusband()));
+            husbandField = new JTextField();
+
+            childrenLabel.setFont(font);
+            childrenValueLabel.setFont(font);
+            childrenField.setFont(font);
+
+            husbandLabel.setFont(font);
+            husbandValueLabel.setFont(font);
+            husbandField.setFont(font);
+
+            childrenLabel.setBounds(50, 230, 150, 30);
+            childrenValueLabel.setBounds(250, 230, 150, 30);
+            childrenField.setBounds(250, 230, 150, 30);
+            childrenField.setVisible(false);
+            childrenEditButton = createEditButton(235);
+
+            husbandLabel.setBounds(50, 270, 150, 30);
+            husbandValueLabel.setBounds(250, 270, 150, 30);
+            husbandField.setBounds(250, 270, 150, 30);
+            husbandField.setVisible(false);
+            husbandEditButton = createEditButton(270);
+        } else {
+
+            Altushka altushka = dbHandlerAltushka.getInfoAlt(login);
+            cBoyFriendLabel = new JLabel("Количество парней:");
+            cBoyFriendValueLabel = new JLabel(String.valueOf(altushka.getCBoyFriend()));
+            cBoyFriendField = new JTextField();
+
+            cBoyFriendLabel.setFont(font);
+            cBoyFriendValueLabel.setFont(font); 
+            cBoyFriendField.setFont(font);
+
+            cBoyFriendLabel.setBounds(50, 310, 150, 30);
+            cBoyFriendValueLabel.setBounds(250, 310, 150, 30);
+            cBoyFriendField.setBounds(250, 310, 150, 30);
+            cBoyFriendField.setVisible(false);
+            cBoyFriendEditButton = createEditButton(310);
+        }
+
+        saveButton = new JButton("Сохранить изменения");
+        backButton = new JButton("Назад");
+
+        titleLabel.setFont(titleFont);
+        loginLabel.setFont(font);
+        loginEditLabel.setFont(smallFont);
+        loginEditLabel.setForeground(Color.GRAY);
+
+        passwordLabel.setFont(font);
+        passwordValueLabel.setFont(font);
+        passwordField.setFont(font);
+
+        cityLabel.setFont(font);
+        cityValueLabel.setFont(font);
+        cityField.setFont(font);
+
+        ageLabel.setFont(font);
+        ageValueLabel.setFont(font);
+        ageField.setFont(font);
+
+        cookingLabel.setFont(font);
+        cookingValueLabel.setFont(font);
+        cookingBox.setFont(font);
+
+
+
+        titleLabel.setBounds(150, 20, 300, 30);
+        loginLabel.setBounds(50, 70, 150, 30);
+        loginEditLabel.setBounds(450, 70, 200, 30);
+
+        passwordLabel.setBounds(50, 110, 150, 30);
+        passwordValueLabel.setBounds(250, 110, 150, 30);
+        passwordField.setBounds(250, 110, 150, 30);
+        passwordField.setVisible(false);
+        passwordEditButton = createEditButton(110);
+        passwordEditButton.addActionListener(e -> toggleEditField(passwordValueLabel, passwordField, passwordEditButton, "password"));
+
+        cityLabel.setBounds(50, 150, 150, 30);
+        cityValueLabel.setBounds(250, 150, 150, 30);
+        cityField.setBounds(250, 150, 150, 30);
+        cityField.setVisible(false);
+        cityEditButton = createEditButton(150);
+        cityEditButton.addActionListener(e -> toggleEditField(cityValueLabel, cityField, cityEditButton, "city"));
+
+
+        ageField.setBounds(250, 190, 150, 30);
+        ageField.setVisible(false);
+        ageEditButton = createEditButton(190);
+        ageEditButton.addActionListener(e -> toggleEditField(ageValueLabel, ageField, ageEditButton, "age"));
+
+        cookingLabel.setBounds(50, 230, 300, 30);
+        //cookingValueLabel.setBounds(280, 230, 30, 30);
+        cookingBox.setBounds(50, 230, 3000, 30);
+        cookingBox.setVisible(false);
+        cookingEditButton = createEditButton(230);
+        cookingEditButton.addActionListener(e -> toggleCookingEdit(cookingValueLabel, cookingBox, cookingEditButton));
+
+
+        saveButton.setBounds(355, 350, 250, 40);
+        backButton.setBounds(50, 350, 250, 40);
+
+        saveButton.addActionListener(e -> saveChanges(login, userRole));
+        backButton.addActionListener(e -> {
+            dispose();
+            try {
+                if (userRole.equals("Milfa")) {
+                    Milfa milfa = dbHandlerMilfa.getInfoMilf(login);
+                    new WindowsMainMilf(milfa).setVisible(true);
+                } else {
+                    Altushka altushka = dbHandlerAltushka.getInfoAlt(login);
+                    new WindowsMainAlt(altushka).setVisible(true);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Ошибка при загрузке данных: " + ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+
+        container.add(titleLabel);
+        container.add(loginLabel);
+        container.add(loginEditLabel);
+        
+        container.add(passwordLabel);
+        container.add(passwordValueLabel);
+        container.add(passwordField);
+        container.add(passwordEditButton);
+        
+        container.add(cityLabel);
+        container.add(cityValueLabel);
+        container.add(cityField);
+        container.add(cityEditButton);
+
+        container.add(ageLabel);
+        container.add(ageValueLabel);
+        container.add(ageField);
+        container.add(ageEditButton);
+
+        container.add(cookingLabel);
+        container.add(cookingValueLabel);
+        container.add(cookingBox);
+        container.add(cookingEditButton);
+
+
+        if (userRole.equals("Milfa")) {
+            childrenEditButton = createEditButton(235);
+            childrenEditButton.addActionListener(e -> toggleEditField(childrenValueLabel, childrenField, childrenEditButton, "children"));
+            
+            husbandEditButton = createEditButton(270);
+            husbandEditButton.addActionListener(e -> toggleEditField(husbandValueLabel, husbandField, husbandEditButton, "husband"));
+            
+            container.add(childrenLabel);
+            container.add(childrenValueLabel);
+            container.add(childrenField);
+            container.add(childrenEditButton);
+
+            container.add(husbandLabel);
+            container.add(husbandValueLabel);
+            container.add(husbandField);
+            container.add(husbandEditButton);
+        } else {
+            cBoyFriendEditButton = createEditButton(310);
+            cBoyFriendEditButton.addActionListener(e -> toggleEditField(cBoyFriendValueLabel, cBoyFriendField, cBoyFriendEditButton, "cBoyFriend"));
+            
+            container.add(cBoyFriendLabel);
+            container.add(cBoyFriendValueLabel);
+            container.add(cBoyFriendField);
+            container.add(cBoyFriendEditButton);
+        }
+
+        container.add(saveButton);
+        container.add(backButton);
+    }
+
+    private JButton createEditButton(int y) {
+        JButton button = new JButton("Редактировать");
+        button.setFont(smallFont);
+        button.setBounds(450, y, 150, 30);
+        return button;
+    }
+
+    private void toggleEditField(JLabel label, JTextField field, JButton button, String fieldType) {
+        label.setVisible(false);
+        field.setVisible(true);
+        field.setText(label.getText());
+        field.requestFocus();
+        button.setText("Отмена");
+        
+        for (java.awt.event.ActionListener al : button.getActionListeners()) {
+            if (al != button.getActionListeners()[0]) {
+                button.removeActionListener(al);
+            }
+        }
+        
+        button.addActionListener(e -> {
+            label.setText(field.getText());
+            label.setVisible(true);
+            field.setVisible(false);
+            button.setText("Редактировать");
+            
+
+            for (java.awt.event.ActionListener al : button.getActionListeners()) {
+                if (al != button.getActionListeners()[0]) {
+                    button.removeActionListener(al);
+                }
+            }
+            
+            button.addActionListener(ev -> toggleEditField(label, field, button, fieldType));
+        });
+    }
+    
+    private void toggleCookingEdit(JLabel label, JCheckBox checkBox, JButton button) {
+        label.setVisible(false);
+        checkBox.setVisible(true);
+        button.setText("Отмена");
+        
+
+        for (java.awt.event.ActionListener al : button.getActionListeners()) {
+            if (al != button.getActionListeners()[0]) {
+                button.removeActionListener(al);
+            }
+        }
+        
+        button.addActionListener(e -> {
+            label.setText(checkBox.isSelected() ? "Умеет" : "Не умеет");
+            label.setVisible(true);
+            checkBox.setVisible(false);
+            button.setText("Редактировать");
+            
+
+            for (java.awt.event.ActionListener al : button.getActionListeners()) {
+                if (al != button.getActionListeners()[0]) {
+                    button.removeActionListener(al);
+                }
+            }
+            
+            button.addActionListener(ev -> toggleCookingEdit(label, checkBox, button));
+        });
+    }
+    
+    private void saveChanges(String login, String userRole) {
+
+        if (passwordField.isVisible() && !new String(passwordField.getPassword()).isEmpty()) {
+            String newPassword = new String(passwordField.getPassword());
+            dbHandler.updateDirtyCirls("password", newPassword, login, userRole);
+        } 
+        
+
+        if (cityField.isVisible() && !cityField.getText().equals(cityValueLabel.getText())) {
+            String newCity = cityField.getText();
+            dbHandler.updateDirtyCirls("city", newCity, login, userRole);
+            cityValueLabel.setText(newCity);
+        }
+        
+
+        if (ageField.isVisible() && !ageField.getText().equals(ageValueLabel.getText())) {
+            try {
+                int newAge = Integer.parseInt(ageField.getText());
+                dbHandler.updateDirtyCirls("age", String.valueOf(newAge), login, userRole);
+                ageValueLabel.setText(String.valueOf(newAge));
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Возраст должен быть числом!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        
+
+        if (coo) {
+            boolean newCooking = cookingBox.isSelected();
+            dbHandler.updateDirtyCirls("cooking", newCooking, login, userRole);
+            cookingValueLabel.setText(cookingBox.isSelected() ? "Умеет" : "Не умеет");
+        }
+        
+
+        if (userRole.equals("Milfa") && childrenField != null && childrenField.isVisible() && !childrenField.getText().equals(childrenValueLabel.getText())) {
+            try {
+                int newChildren = Integer.parseInt(childrenField.getText());
+                dbHandler.updateDirtyCirls("children", String.valueOf(newChildren), login, userRole);
+                childrenValueLabel.setText(String.valueOf(newChildren));
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Количество детей должно быть числом!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        
+        if (userRole.equals("Milfa") && husbandField != null && husbandField.isVisible() && !husbandField.getText().equals(husbandValueLabel.getText())) {
+            try {
+                int newHusband = Integer.parseInt(husbandField.getText());
+                dbHandler.updateDirtyCirls("husband", String.valueOf(newHusband), login, userRole);
+                husbandValueLabel.setText(String.valueOf(newHusband));
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Количество мужей должно быть числом!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        
+        if (userRole.equals("Altushka") && cBoyFriendField != null && cBoyFriendField.isVisible() && !cBoyFriendField.getText().equals(cBoyFriendValueLabel.getText())) {
+            try {
+                int newCBoyFriend = Integer.parseInt(cBoyFriendField.getText());
+                dbHandler.updateDirtyCirls("cBoyFriend", String.valueOf(newCBoyFriend), login, userRole);
+                cBoyFriendValueLabel.setText(String.valueOf(newCBoyFriend));
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Количество парней должно быть числом!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+
+        passwordField.setVisible(false);
+        passwordValueLabel.setVisible(true);
+        cityField.setVisible(false);
+        cityValueLabel.setVisible(true);
+        ageField.setVisible(false);
+        ageValueLabel.setVisible(true);
+        cookingBox.setVisible(false);
+        cookingValueLabel.setVisible(true);
+        
+        if (userRole.equals("Milfa")) {
+            if (childrenField != null) childrenField.setVisible(false);
+            if (childrenValueLabel != null) childrenValueLabel.setVisible(true);
+            if (husbandField != null) husbandField.setVisible(false);
+            if (husbandValueLabel != null) husbandValueLabel.setVisible(true);
+        } else {
+            if (cBoyFriendField != null) cBoyFriendField.setVisible(false);
+            if (cBoyFriendValueLabel != null) cBoyFriendValueLabel.setVisible(true);
+        }
+
+
+        passwordEditButton.setText("Редактировать");
+        cityEditButton.setText("Редактировать");
+        ageEditButton.setText("Редактировать");
+        cookingEditButton.setText("Редактировать");
+        
+        if (userRole.equals("Milfa") && childrenEditButton != null) {
+            childrenEditButton.setText("Редактировать");
+            husbandEditButton.setText("Редактировать");
+        } else if (cBoyFriendEditButton != null) {
+            cBoyFriendEditButton.setText("Редактировать");
+        }
+
+        JOptionPane.showMessageDialog(this, "Изменения сохранены успешно!", "Успех", JOptionPane.INFORMATION_MESSAGE);
+    }
+}

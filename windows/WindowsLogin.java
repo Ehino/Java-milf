@@ -14,12 +14,12 @@ import models.UserEmployer;
 
 public class WindowsLogin extends JFrame {
 
-    JLabel loginLabel, passwordLabel;
-    JTextField loginField;
-    JPasswordField passwordField; 
-    JButton enterButton, backButton;
+    private JLabel loginLabel, passwordLabel;
+    private JTextField loginField;
+    private JPasswordField passwordField; 
+    private JButton enterButton, backButton;
 
-    Font font = new Font("Arial", Font.ITALIC, 16);
+    private Font font = new Font("Arial", Font.ITALIC, 16);
 
     public WindowsLogin() {
         super("Milf&Altushka Hunter/Вход");

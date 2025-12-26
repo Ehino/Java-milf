@@ -11,14 +11,14 @@ import utils.RefreshVacancies;
 
 public class WindowsResponsesVacancy extends JFrame{
 
-    JButton backButton;
+    private JButton backButton;
 
-    Font font = new Font("Arial", Font.ITALIC, 16);
-    Font font18 = new Font("Arial", Font.ITALIC, 18);
-    Font font20 = new Font("Arial", Font.ITALIC, 20);
+    private final Font font = new Font("Arial", Font.ITALIC, 16);
+    private final Font font18 = new Font("Arial", Font.ITALIC, 18);
+    private final Font font20 = new Font("Arial", Font.ITALIC, 20);
 
-    DatabaseHandler dbHandler = new DatabaseHandler();
-    DBHandlerEmployer dbHandlerEmployer = new DBHandlerEmployer();
+    private final DatabaseHandler dbHandler = new DatabaseHandler();
+    private final DBHandlerEmployer dbHandlerEmployer = new DBHandlerEmployer();
     
     public WindowsResponsesVacancy(String login, String password){
         super("Откликнутые вакансии");

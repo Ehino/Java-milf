@@ -24,17 +24,17 @@ import utils.SaveUsers;
 
 public class WindowsGirls extends JFrame{
 
-	JLabel nameLabel, cityLabel, passwordLabel, ageLabel, childrenLabel, husbandLabel, boyfriendLabel;
-	JPasswordField passwordField;
-	JTextField nameField, cityField, ageField;
-	JCheckBox cookingbox;
-	JRadioButton milfButton, altushkaButton;
-	JTextField childrenField, husbandField, boyfriendField;
-	JPanel dopPanel;
-	JButton regButton, backButton;
-	DatabaseHandler dbHandler = new DatabaseHandler();
-	DBHandlerMilfa dbHandlerMilfa = new DBHandlerMilfa();
-	DBHandlerAltushka dbHandlerAltushka = new DBHandlerAltushka();
+	private JLabel nameLabel, cityLabel, passwordLabel, ageLabel, childrenLabel, husbandLabel, boyfriendLabel;
+	private JPasswordField passwordField;
+	private JTextField nameField, cityField, ageField;
+	private JCheckBox cookingBox;
+	private JRadioButton milfButton, altushkaButton;
+	private JTextField childrenField, husbandField, boyfriendField;
+	private JPanel dopPanel;
+	private JButton regButton, backButton;
+	private final DatabaseHandler dbHandler = new DatabaseHandler();
+	private final DBHandlerMilfa dbHandlerMilfa = new DBHandlerMilfa();
+	private final DBHandlerAltushka dbHandlerAltushka = new DBHandlerAltushka();
 	
     Font font = new Font("Arial", Font.ITALIC, 16);
     public WindowsGirls(){
@@ -55,12 +55,12 @@ public class WindowsGirls extends JFrame{
 		cityField = new JTextField("");
 		ageLabel = new JLabel("Введите свой возраст:");
 		ageField = new JTextField();
-		cookingbox = new JCheckBox("Умеете ли вы готовить?");
+		cookingBox = new JCheckBox("Умеете ли вы готовить?");
 
 		nameLabel.setFont(font);
 		cityLabel.setFont(font);
 		ageLabel.setFont(font);
-		cookingbox.setFont(font);
+		cookingBox.setFont(font);
 		passwordLabel.setFont(font);
 
 
@@ -72,7 +72,7 @@ public class WindowsGirls extends JFrame{
 		cityField.setBounds(250, 150, 200, 30);
 		ageLabel.setBounds(50, 200, 200, 30);
 		ageField.setBounds(250, 200, 200, 30);
-		cookingbox.setBounds(50, 250, 250, 30);
+		cookingBox.setBounds(50, 250, 250, 30);
 
 		container.add(nameLabel);
 		container.add(nameField);
@@ -82,7 +82,7 @@ public class WindowsGirls extends JFrame{
 		container.add(cityField);
 		container.add(ageLabel);
 		container.add(ageField);
-		container.add(cookingbox);
+		container.add(cookingBox);
 
 		milfButton = new JRadioButton("Милфа");
 		altushkaButton = new JRadioButton("Альтушка");
@@ -181,7 +181,7 @@ public class WindowsGirls extends JFrame{
 			String password = new String(passwordField.getPassword());
 			String city = cityField.getText();
 			String ageText = ageField.getText();
-			boolean cooking = cookingbox.isSelected();
+			boolean cooking = cookingBox.isSelected();
 
 			if(name.isEmpty() || password.isEmpty() || city.isEmpty() || ageText.isEmpty()){
 				JOptionPane.showMessageDialog(WindowsGirls.this, "Заполните все поля!", "Ошибка", JOptionPane.ERROR_MESSAGE);

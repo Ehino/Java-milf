@@ -44,14 +44,6 @@ public abstract class Employer{
         return companyName;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
     public String getJobDescribe() {
         return jobDescribe;
     }

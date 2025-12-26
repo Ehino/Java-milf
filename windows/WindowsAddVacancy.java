@@ -11,13 +11,13 @@ import models.UserEmployer;
 
 public class WindowsAddVacancy extends JFrame {
 
-    JLabel girlTypeLabel, jDescribeLabel, requirementsLabel;
-    JTextArea jDescribeArea, requirementsArea;
-    JButton addButton, backButton;
-    UserEmployer employer;
-    JComboBox<String> girlTypeCombo;
+    private JLabel girlTypeLabel, jDescribeLabel, requirementsLabel;
+    private JTextArea jDescribeArea, requirementsArea;
+    private JButton addButton, backButton;
+    private UserEmployer employer;
+    private JComboBox<String> girlTypeCombo;
 
-    Font font = new Font("Arial", Font.ITALIC, 16);
+    private final Font font = new Font("Arial", Font.ITALIC, 16);
 
     public WindowsAddVacancy(UserEmployer employer) {
         super("Добавление вакансии");

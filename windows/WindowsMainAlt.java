@@ -9,15 +9,15 @@ import utils.RefreshVacancies;
 
 public class WindowsMainAlt extends JFrame{
 
-	JLabel nameLabel, cityLabel, ageLabel, cookingLabel, cBoyFrinedLabel, girlTypeLabel, aLabel;
-	JLabel headLabel;
+	private JLabel nameLabel, cityLabel, ageLabel, cookingLabel, cBoyFrinedLabel, girlTypeLabel, aLabel;
+	private JLabel headLabel;
 
-	JButton editProfileButton, responsesButton;
+	private JButton editProfileButton, responsesButton;
 
-	Font font = new Font("Arial", Font.ITALIC, 16);
-	Font font20 = new Font("Arial", Font.ITALIC, 20);
+	private  final Font font = new Font("Arial", Font.ITALIC, 16);
+	private final Font font20 = new Font("Arial", Font.ITALIC, 20);
 
-	DatabaseHandler dbHandler = new DatabaseHandler();
+	private final DatabaseHandler dbHandler = new DatabaseHandler();
 
 	public WindowsMainAlt(Altushka altushka){
 		super("Altushka окно профиля");
@@ -52,7 +52,11 @@ public class WindowsMainAlt extends JFrame{
 
 		editProfileButton.setFont(font);
 		responsesButton.setFont(font);
-		//editProfilebButton.addActionListener(e ->);
+		editProfileButton.addActionListener(e ->{
+			dispose();
+			WindowsEditDirtyGirl windowsEditDirtyGirl = new WindowsEditDirtyGirl(altushka.getName(), altushka.getPassword());
+			windowsEditDirtyGirl.setVisible(true);
+		});
 		responsesButton.addActionListener(e ->{
 			WindowsResponsesVacancy windowsResponsesVacancy = new WindowsResponsesVacancy(altushka.getName(), altushka.getPassword());
 			windowsResponsesVacancy.setVisible(true);

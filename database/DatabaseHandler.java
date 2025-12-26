@@ -137,5 +137,37 @@ public class DatabaseHandler extends Configs{
         return false;
     }
 
+    public void updateDirtyCirls(String field, String edit, String login, String userRole) {
+        if(userRole.equals("Milfa")){
+            userRole = Const.MILF_TABLE;
+        } else {
+            userRole = Const.ALT_TABLE;
+        }
+        
+        String update = "UPDATE " + userRole + " SET " + field + 
+        "=? WHERE " + Const.MILF_NAME + "=?";
+        try {
+            PreparedStatement prSt = getDbConnectionDirty().prepareStatement(update);
+            if(!field.equals(Const.MILF_COOKING)) {
+                if(field.equals(Const.MILF_AGE) || field.equals(Const.MILF_CHILDREN) || field.equals(Const.MILF_HUSBAND) || field.equals(Const.ALT_CBOYFRIEND)){
+                    try {
+                        prSt.setInt(1, Integer.parseInt(edit));
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    prSt.setString(1, edit);
+                }
+            } else{
+                if(edit.equals("Умеет")) prSt.setBoolean(1, true);
+                else prSt.setBoolean(1, false);
+            } 
+            prSt.setString(2, login);
+            prSt.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     
 } 

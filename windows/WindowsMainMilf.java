@@ -9,15 +9,15 @@ import utils.RefreshVacancies;
 
 public class WindowsMainMilf extends JFrame{
 
-	JLabel nameLabel, cityLabel, ageLabel, cookingLabel, childrenLabel, husbandLabel, girlTypeLabel, aLabel;
-	JLabel headLabel;
+	private JLabel nameLabel, cityLabel, ageLabel, cookingLabel, childrenLabel, husbandLabel, girlTypeLabel, aLabel;
+	private JLabel headLabel;
 
-	JButton editProfileButton, responsesButton;
+	private JButton editProfileButton, responsesButton;
 
-	Font font = new Font("Arial", Font.ITALIC, 16);
-	Font font20 = new Font("Arial", Font.ITALIC, 20);
+	private final Font font = new Font("Arial", Font.ITALIC, 16);
+	private final Font font20 = new Font("Arial", Font.ITALIC, 20);
 
-	DatabaseHandler dbHandler = new DatabaseHandler();
+	private final DatabaseHandler dbHandler = new DatabaseHandler();
 
 	public WindowsMainMilf(Milfa milfa){
 		super("Milf окно профиля");
@@ -54,7 +54,11 @@ public class WindowsMainMilf extends JFrame{
 
 		editProfileButton.setFont(font);
 		responsesButton.setFont(font);
-		//editProfilebButton.addActionListener(e ->);
+		editProfileButton.addActionListener(e ->{
+			dispose();
+			WindowsEditDirtyGirl windowsEditDirtyGirl = new WindowsEditDirtyGirl(milfa.getName(), milfa.getPassword());
+			windowsEditDirtyGirl.setVisible(true);
+		});
 		responsesButton.addActionListener(e ->{
 			WindowsResponsesVacancy windowsResponsesVacancy = new WindowsResponsesVacancy(milfa.getName(), milfa.getPassword());
 			windowsResponsesVacancy.setVisible(true);
